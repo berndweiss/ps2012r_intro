@@ -1,0 +1,8 @@
+*.zip
+build/*
+waf-*/*
+**/**/.lock-*
+**/**/.wafpickle*
+**/**/*.log
+.lock-*
+**/**/c4che/*

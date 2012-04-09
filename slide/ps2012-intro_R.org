@@ -1,0 +1,988 @@
+#+TITLE:     YasiR -- Yet another short introduction to R
+#+AUTHOR:    Bernd Weiss\\\url{bernd.weiss@uni-koeln.de}\\Research Institute for Sociology\\University of Cologne\\Germany
+#+EMAIL:     bernd.weiss@uni-koeln.de
+#+DATE:      2012-04-11 \vfill \byncsa 
+
+#+DESCRIPTION: 
+#+STARTUP: hidestars
+#+PROPERTY: COOKIE_DATA recursive
+#+KEYWORDS: 
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT: 
+
+
+# Babel settings
+#+PROPERTY: session *R*
+#+PROPERTY: tangle ../src/ps2012-intro_R.R
+#+PROPERTY: comments yes
+#+PROPERTY: results output
+#+PROPERTY: exports both
+
+#+BEAMER_FRAME_LEVEL: 3
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+latex_header: %%\mode<beamer>{\usetheme{Madrid}}
+#latex_header: \usepackage{lucidabr}
+#+latex_header: \usepackage{marvosym}
+#+latex_header: \usepackage{cclicenses}
+#+LATEX_HEADER: \usepackage{csquotes}
+#+latex_header: \hypersetup{colorlinks=true, urlcolor=cyan, linkcolor=black}
+
+
+#+begin_LaTeX
+\newcommand{\infobox}[1]{
+  \vfill\vfill\hrule
+  \begin{columns}[t]
+    \begin{column}{0.02\textwidth}
+      \Info 
+    \end{column}
+    \begin{column}[T]{0.97\textwidth}
+      \tiny{#1}
+    \end{column}
+\end{columns}} 
+
+\definecolor{dkgreen}{rgb}{0,0.5,0}
+\definecolor{dkred}{rgb}{0.5,0,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{basicstyle=\ttfamily\bfseries\footnotesize,
+morekeywords={virtualinvoke},
+%%keywordstyle=\color{blue},
+%%ndkeywordstyle=\color{red},
+commentstyle=\color{dkred},
+%%stringstyle=\color{dkgreen},
+numbers=left,
+numberstyle=\ttfamily\tiny\color{gray},
+stepnumber=1,
+numbersep=10pt,
+backgroundcolor=\color{white},
+tabsize=4,
+showspaces=false,
+showstringspaces=false,
+xleftmargin=.23in
+}
+#+end_LaTeX
+
+#+begin_latex
+\AtBeginSection[] % Do nothing for \section*
+{
+  \begin{frame}%<beamer>
+    \frametitle{Section overview}
+    \begin{footnotesize}
+      \tableofcontents[sectionstyle=show/shaded, subsectionstyle = show/show/shaded]
+    \end{footnotesize}
+  \end{frame}
+}
+
+
+\AtBeginSubsection[] % Do nothing for \section*
+{
+  \begin{frame}%<beamer>
+    \frametitle{Subsection overview}
+    \begin{footnotesize}
+      %%\tableofcontents[sectionstyle=show/hide, subsectionstyle = show/show/hide]
+      \tableofcontents[sectionstyle=show/shaded, subsectionstyle = show/shaded/hide]
+       \end{footnotesize}
+  \end{frame}
+}
+#+end_latex
+
+
+
+
+# Acknowledgment
+#%% http://www.cs.unm.edu/~eschulte/
+
+
+* Introduction
+
+** Preamble 
+
+#+begin_latex
+\begin{frame}\frametitle{Acknowledgment, license and downloads}
+\begin{itemize}
+\item My presentation was created using Emacs' \href{http://orgmode.org/}{\emph{org-mode}} and
+\href{http://orgmode.org/worg/org-contrib/babel/}{\emph{Babel: active code in 
+Org-mode}}. \emph{Babel} is developed and maintained by Eric Schulte and Dan Davison who were extremely
+helpful in answering my questions or fixing bugs.  
+\item Licensed under a Creative Commons
+\href{http://creativecommons.org/licenses/by-nc-sa/3.0/de/deed.en}{Attribution-NonCommercial-ShareAlike
+3.0 Germany} license. 
+\item Slides, dataset and R code can be downloaded from my github page:
+\href{https://github.com/berndweiss/ps2012-intro_R}{https://github.com/berndweiss/ps2012-intro\_R} (see
+"Downloads" button on the right-hand side). 
+\end{itemize}
+\end{frame}
+#+end_latex
+
+*** Objectives
+    - Introduce /some/ basic concepts of R
+    - Show some common steps in data preparation and data analysis (esp. meta-analysis)
+    - Present some showcases which cover advanced usage of R
+
+
+*** What is R?
+\enquote{R is a language and environment for statistical computing and graphics. [...] Many users think of R
+as a statistics system. We prefer to think of it of an environment within which statistical
+techniques are implemented. R can be extended (easily) via packages. There are about eight packages
+supplied with the R distribution and many more are available through the CRAN family of Internet
+sites covering a very wide range of modern statistics} (http://www.r-project.org/about.html).
+
+
+
+*** Why use R?
+- It is free (GNU General Public Licence).
+- Can be used on many platforms (MS Windows, Linux, Mac OS etc.).
+- Includes cutting-edge statistical technologies and state-of-the-art graphics capabilities.
+- Since R is a fully developed programming language, it is very (extremely) flexible.
+- \ldots
+
+#+begin_LaTeX
+\infobox{Inspired by \href{http://www.statmethods.net/index.html}{Quick-R: Why Use R?}}
+#+end_LaTeX
+
+
+
+*** Why not use R?
+- Steep learning curve.
+- R is a programming language.
+- Sometimes R lacks consistency (packages).
+- \ldots
+
+
+*** R under MS Windows
+    \begin{center}
+    \includegraphics[scale = 0.3]{../graph/f_screenshot}
+    \end{center}
+
+
+
+** Five basic R concepts
+
+*** Five basic R concepts you need to know
+    1. Objects  
+    2. Packages
+    3. Grammar (Syntax) of R functions
+    4. Important data types/data structures
+    5. Missing values
+
+
+*** It's all about objects
+    - (Nearly) Everything in R is an object (some similarities to Stata's
+      container concept)
+    - What are objects? \enquote{The entities that R creates and manipulates are known as objects} (AItR: 5), e.g.:
+      - Data sets
+      - Variables
+      - Results of any statistical calculation
+      - \ldots
+    - It is possible to access/manipulate pieces of more complex objects (e.g. datasets or regression results)
+
+
+*** A first example of an R object
+    - "=<-=" means "assign"
+    - If you type in the object's name, R prints out its value[fn:1]
+    - "[...]" denotes R output (here, 1, only one element is shown)
+    - "\#" is used for comments
+
+
+#+BEGIN_SRC R
+x <- 1 ## assign value 1 to symbol/variable "x"
+x      ## or: print(x)
+#+END_SRC
+
+#+BEGIN_SRC R
+x + x
+#+END_SRC
+
+#+BEGIN_SRC R
+x * 100
+#+END_SRC
+
+
+*** A second example of an R object
+
+    We also can create vectors ($1\times4$) or matrices ($2\times3$):
+    
+#+BEGIN_SRC R
+x.vector <- c(1,2,3,4) ## c() means "concatenate" 
+x.vector
+#+END_SRC
+
+#+results:
+: [1] 1 2 3 4
+
+
+#+BEGIN_SRC R
+x.matrix <- matrix(c(1,2,3,4,5,6), ncol = 3)
+x.matrix
+#+END_SRC
+
+#+results:
+:      [,1] [,2] [,3]
+: [1,]    1    3    5
+: [2,]    2    4    6
+
+
+
+*** A third example of an R object				    :B_frame:
+   :PROPERTIES:
+   :BEAMER_env: frame
+   :BEAMER_envargs: [shrink = 20]
+   :END:
+    Conduct a t-test and save results in object =oTtest=.
+
+#+BEGIN_SRC R
+oTtest <- t.test(rnorm(100) ~ sample(0:1, 100, replace = TRUE))
+oTtest
+#+END_SRC
+
+
+#+results:
+#+begin_example
+
+	Welch Two Sample t-test
+
+data:  rnorm(100) by sample(0:1, 100, replace = TRUE) 
+t = 0.4303, df = 91.283, p-value = 0.668
+alternative hypothesis: true difference in means is not equal to 0 
+95 percent confidence interval:
+ -0.2958202  0.4594118 
+sample estimates:
+mean in group 0 mean in group 1 
+    0.075802877    -0.005992949
+#+end_example
+
+
+Get the test statistic\ldots
+
+#+BEGIN_SRC R
+oTtest$statistic 
+#+END_SRC
+
+#+results:
+:         t 
+: -1.625824
+
+\ldots or the p-value.
+
+#+BEGIN_SRC R
+oTtest$p.value 
+#+END_SRC
+
+#+results:
+: [1] 0.1072097
+
+
+
+
+
+*** Packages
+    - R functions are stored in packages.
+    - When you download R, it only comes with a very limited set of functions
+      (e.g., it knows nothing about SPSS data files or meta-analysis).
+    - To load a particular package, use a command like =library(meta)=.
+    - However, before you can load a package, you have to install (download)
+      it. This can be done via =install.packages("meta")=.
+    - Whenever a new R session is started, the packages have to be loaded via =library(...)=.
+
+#+begin_LaTeX
+\infobox{
+\href{http://cran.r-project.org/doc/manuals/R-intro.html\#Packages}{AItR on packages}\\
+\href{http://www.statmethods.net/interface/packages.html}{Quick-R on packages}\\
+\href{http://www.ats.ucla.edu/stat/r/faq/packages.htm}{UCLA's ATS on How can I manage R packages?}
+}
+#+end_LaTeX
+
+
+
+*** The basic syntax of an R function
+    - The general syntax is: =functionname(arglist)=
+    - =arglist=: A comma separated list of arguments which can be represented by
+      \\ =symbol = expression=
+    - Often, a symbol called =x= is used; =x= represents an R object
+    - Some simple examples:
+      - Average of an object =a= (a vector):  =mean(x = a)=
+      - Standard deviation of =a=: =sd(x = a)= 
+      - Correlation between two vectors =a= and =b=: =cor(x = a, y = b)=
+    - Type =?functionname= and see "Usage" and "Arguments" for more information.
+
+
+*** Important data types/data structures
+    - When you are used to SPSS or Stata, you never (rarely) had to deal with
+      data types or structures.
+    - The next few slides introduce some important data types or data
+      structures. For R novices in the social sciences, the most important data
+      structure you encounter is called \enquote{data frame}. A data frame can
+      be used to store a typical rectangular social sciences data set with
+      varying data modes (numeric, character)
+    - Typically, a data set is provided as text, csv, SPSS, Stata, SAS
+      etc. file. When this file is loaded into R, (in most cases) it is available as data
+      frame. 
+
+
+*** Important data types/data structures (cont'd) 		    :B_frame:
+   :PROPERTIES:
+   :BEAMER_env: frame
+   :BEAMER_envargs: [shrink = 15]
+   :END:
+    - Scalar
+    #+BEGIN_SRC R
+    x.scalar <- 1
+    x.scalar
+    #+END_SRC
+
+    #+RESULTS:
+    : [1] 1
+
+    - Vector
+    #+BEGIN_SRC R
+    x.vector <- c(1,2,3)
+    x.vector
+    #+END_SRC
+
+    - Factor (nominal scale; sth like =mean(x.factor)= does not work!)
+    #+BEGIN_SRC R
+    x.factor <- factor(c(1,2,3), labels = c("low", "middle", "high"))
+    x.factor
+    #+END_SRC
+
+
+    #+begin_LaTeX
+    \infobox{\href{http://www.statmethods.net/input/datatypes.html}{Quick-R on Data Types}}
+    #+end_LaTeX
+
+
+
+*** Important data types/data structures (cont'd)		    :B_frame:
+    :PROPERTIES:
+    :BEAMER_env: frame
+    :BEAMER_envargs: [shrink = 15]
+    :END:
+    - Data frame (each column can have a different data type)
+ #+BEGIN_SRC R
+ x.df <- data.frame(ID = c(1,2,3), sex = factor(c("f", "f", "m")), 
+                    age = c(22, 45, 12))
+ x.df
+ #+END_SRC
+
+ #+RESULTS:
+ :   ID sex age
+ : 1  1   f  22
+ : 2  2   f  45
+ : 3  3   m  12
+
+ 
+    - List (most complex data structure)
+    #+BEGIN_SRC R
+    x.list <- list(a = c(1,2,3), b = x.df)
+    x.list
+    #+END_SRC
+
+    #+RESULTS:
+    : $a
+    : [1] 1 2 3
+    : 
+    : $b
+    :   ID sex age
+    : 1  1   f  22
+    : 2  2   f  45
+    : 3  3   m  12
+
+
+*** Missing data
+    - The symbol =NA= (Not Available) represents missing values.
+    - Unlike SPSS, most R functions do not use a listwise deletion strategy, e.g.: 
+    #+BEGIN_SRC R
+    x.na <- c(1,2,3, NA, 5)
+    mean(x.na)
+    #+END_SRC
+
+    However, if you specify =na.rm = TRUE= then =mean()= will calculate the mean:
+
+    #+BEGIN_SRC R
+    mean(x.na, na.rm = TRUE)
+    #+END_SRC
+
+    #+begin_LaTeX
+    \infobox{\href{http://www.statmethods.net/input/missingdata.html}{Quick-R on Missing data}
+    }
+    #+end_LaTeX
+
+
+
+
+
+* Installation, help and maintenance
+** 
+*** Download and installation
+    - R can be downloaded from the Comprehensive R Archive Network (CRAN). The process is as follows:
+      1. Choose a CRAN mirror (e.g., University of Tennessee, Knoxville, TN: http://mira.sunsite.utk.edu/CRAN/).
+      2. Choose a precompiled binary distribution (e.g., Windows).
+      3. Choose binaries for base distribution and then "Download R 2.12.0 for Windows".
+    - After downloading R-2.12.0-win.exe, execute the file. 
+
+
+*** Getting help
+    - =help(functionname)= (or =?functionname=) opens the help pages (in rare cases you have to use
+      quotation marks, e.g. =help("[")=).
+    - =help.search("keyword")= searches all installed packages for "keyword" (e.g., help.search("meta-analysis")).
+    - The package =sos= offers the function =findFn()= which is much more flexible than =help.search()=,
+     (e.g., =findFn("meta-analysis")=).
+    - CRAN Task Views give an overview with respect to a certain topic (e.g.,
+  [[http://cran.r-project.org/web/views/SocialSciences.html][    "CRAN Task View: Statistics for the Social Sciences"]]) or
+  [[http://cran.r-project.org/web/views/Psychometrics.html]["CRAN Task View: Psychometric Models and
+  Methods"]]).   
+
+#+begin_latex
+\infobox{\href{http://www.statmethods.net/interface/help.html}{Quick-R on Getting Help}}
+#+end_latex
+
+
+
+*** Keeping R up-to-date
+    - Use the latest R version (updated twice a year).
+    - Updating packages is easy via =update.packages()=.
+
+
+
+*** Text editors (or: How to interact with R)
+    Use a text editor which (at least) offers syntax highlighting. 
+    - A recommended solution is RStudio (see next slide; can be downloaded from XXX)
+    - My preferred solution is Emacs + [[http://ess.r-project.org/][ESS]].
+    - See also [[http://www.sciviews.org/_rgui/][The R GUI Projects website]]. 
+
+
+*** RStudio
+    \begin{center}
+    \includegraphics[scale = 0.3]{../graph/f_screenshot_rstudio}
+    \end{center}
+
+
+
+
+* Loading a (SPSS) dataset
+** 
+
+*** Overview
+    - R can handle many different data formats, e.g. SPSS, Stata, SAS, all sorts of text formats or DBMS.
+    - However, many data formats require you to load a certain package which then provides a function to load the data. 
+    - Whenever you load a specific dataset, you need to assign it to an object via =<-=.
+    - The functions =fix()= and =edit()= open a MS-Excel-like datasheet (under MS-Windows).
+
+
+*** Loading a dataset
+   :PROPERTIES:
+   :BEAMER_env: frame
+   :BEAMER_envargs: [shrink = 15]
+   :END:
+    - =setwd()=: set working directory 
+    - =library(foreign)=: Enables R to load SPSS datasets
+    - =read.spss()=: Read SPSS dataset
+    - =names()=: show column ("variable") names of data object
+    - For a description see next slide
+
+    #+BEGIN_SRC  R
+    setwd("../data")
+    library(foreign)
+    dTeachExp <- read.spss(file = "dTeachExpRed.sav", 
+                           to.data.frame = TRUE, 
+                           use.value.labels = FALSE)
+    names(dTeachExp)
+    #+END_SRC
+
+    #+RESULTS:
+    : [1] "ID"      "T"       "V"       "weeks"   "weekcat"
+
+
+
+*** The teacher-expectancy data set
+    XXX
+
+
+
+*** Inspect your data
+    #+BEGIN_SRC R
+    head(dTeachExp) # prints first 6 cases
+    #+END_SRC
+
+    #+RESULTS:
+    :   ID     T        V weeks weekcat    SE
+    : 1  1  0.03 0.015625     2       2 0.125
+    : 2  2  0.12 0.021609    21       3 0.147
+    : 3  3 -0.14 0.027889    19       3 0.167
+    : 4  4  1.18 0.139129     0       0 0.373
+    : 5  5  0.26 0.136161     0       0 0.369
+    : 6  6 -0.06 0.010609     3       3 0.103
+
+    Another way to inspect your data is =edit()= or =fix()= (be careful not to
+    modify your data unintentionally). 
+
+
+*** Accessing elements of a data frame				    :B_frame:
+    :PROPERTIES:
+    :BEAMER_env: frame
+    :BEAMER_envargs: [shrink=5]
+    :END:
+    - Since R can handle many data objects, you first have to refer to a
+      particular data object. Second, specify which element(s) you are interested
+      in.
+    - There is a more general and a more specific method of accessing elements
+      of a data frame: the =[=- and the =$=-operator. 
+
+    #+BEGIN_SRC R
+    dTeachExp[,"T"] # access variable T
+    #+END_SRC
+
+    #+RESULTS:
+    :  [1]  0.03  0.12 -0.14  1.18  0.26 -0.06 -0.02 -0.32  0.27  0.80  0.54  0.18
+    : [13] -0.02  0.23 -0.18 -0.06  0.30  0.07 -0.07
+
+    #+BEGIN_SRC R
+    dTeachExp$T # access variable T, shortcut for dTeachExp[,"T"]
+    #+END_SRC
+
+    #+RESULTS:
+    :  [1]  0.03  0.12 -0.14  1.18  0.26 -0.06 -0.02 -0.32  0.27  0.80  0.54  0.18
+    : [13] -0.02  0.23 -0.18 -0.06  0.30  0.07 -0.07
+
+
+    #+BEGIN_SRC R
+    dTeachExp[1:4,c("T", "weeks")] # access first 4 obs of T and weeks
+    #+END_SRC
+
+    #+RESULTS:
+    :       T weeks
+    : 1  0.03     2
+    : 2  0.12    21
+    : 3 -0.14    19
+    : 4  1.18     0
+
+ 
+
+*** Saving a dataset
+    - =save(object, file = "filename")= saves a particular data (or a list of objects) object to the
+      specified file.
+    - =save.image(file = "filename")= saves the current workspace (i.e., all objects shown by =ls()= or
+      =objects()=).
+    - =dump()= or =write.table()= saves data objects in plain text files.
+    - The =foreign= package has functions to save data objects as SPSS, Stata, SAS files.  
+
+
+
+
+* Data cleaning and data preparation
+
+** 
+
+*** Overview
+    - Generate new variables
+    - Select cases (subsetting/indexing) and variables
+    - Missing values
+
+
+*** Creating new variables
+#+BEGIN_SRC R
+dTeachExp$SE <- sqrt(dTeachExp$V)
+head(round(dTeachExp, digits = 2))
+#+END_SRC
+
+#+results:
+:   ID     T    V weeks weekcat   SE
+: 1  1  0.03 0.02     2       2 0.12
+: 2  2  0.12 0.02    21       3 0.15
+: 3  3 -0.14 0.03    19       3 0.17
+: 4  4  1.18 0.14     0       0 0.37
+: 5  5  0.26 0.14     0       0 0.37
+: 6  6 -0.06 0.01     3       3 0.10
+
+
+
+*** Removing cases I (subsetting/indexing)			    :B_frame:
+    :PROPERTIES:
+   :BEAMER_env: frame
+   :BEAMER_envarg: [shrink=10]
+   :END:
+    Relational (=<=, =>=, =<==, =>==, ==, !=) and logical operators (=&=, =|=, =!=) can be used to remove certain cases.
+#+BEGIN_SRC R 
+subset(dTeachExp, weekcat == 0)
+#+END_SRC
+
+#+results:
+:    ID    T        V weeks weekcat    SE
+: 4   4 1.18 0.139129     0       0 0.373
+: 5   5 0.26 0.136161     0       0 0.369
+: 9   9 0.27 0.026896     0       0 0.164
+: 11 11 0.54 0.091204     0       0 0.302
+: 12 12 0.18 0.049729     0       0 0.223
+
+
+#+BEGIN_SRC R 
+subset(dTeachExp, weekcat == 0 & T > 1)
+#+END_SRC
+
+#+results:
+:   ID    T        V weeks weekcat    SE
+: 4  4 1.18 0.139129     0       0 0.373
+
+
+*** Removing cases II						    :B_frame:
+    :PROPERTIES:
+   :BEAMER_env: frame
+   :BEAMER_envarg: [shrink=10]
+   :END:
+    =subset()= is one way to create subsets. Another possibility is using the
+    =[=-operator. 
+#+BEGIN_SRC R 
+dTeachExp[dTeachExp$weekcat == 0, ]
+#+END_SRC
+
+#+results:
+:    ID    T        V weeks weekcat    SE
+: 4   4 1.18 0.139129     0       0 0.373
+: 5   5 0.26 0.136161     0       0 0.369
+: 9   9 0.27 0.026896     0       0 0.164
+: 11 11 0.54 0.091204     0       0 0.302
+: 12 12 0.18 0.049729     0       0 0.223
+
+
+#+BEGIN_SRC R 
+dTeachExp[dTeachExp$weekcat == 0 & dTeachExp$T > 1, ]
+#+END_SRC
+
+#+results:
+:   ID    T        V weeks weekcat    SE
+: 4  4 1.18 0.139129     0       0 0.373
+
+
+
+*** Removing (or keeping) cases III				    :B_frame:
+   :PROPERTIES:
+   :BEAMER_env: frame
+   :BEAMER_envargs: [shrink=0]
+   :END:
+    Say, you want to remove cases based on a list of person IDs. In that case, you can use the =%in%= function.
+#+BEGIN_SRC R
+keep.ids <- c(1, 4, 6, 8)
+dTeachExp.new <- dTeachExp[dTeachExp$ID %in% keep.ids, ]
+dTeachExp.new
+#+END_SRC
+    
+    
+    
+*** Removing missing values					    :B_frame:
+    :PROPERTIES:
+    :BEAMER_env: frame
+    :BEAMER_envargs: [shrink = 20]
+    :END:
+#+BEGIN_SRC R
+dTeachExp.missing <- dTeachExp
+dTeachExp.missing$T[c(1, 3, 6)] <- NA
+dTeachExp.missing$weekcat[c(2, 3)] <- NA
+head(dTeachExp.missing)
+#+END_SRC
+
+#+results:
+:   ID    T        V weeks weekcat    SE
+: 1  1   NA 0.015625     2       2 0.125
+: 2  2 0.12 0.021609    21      NA 0.147
+: 3  3   NA 0.027889    19      NA 0.167
+: 4  4 1.18 0.139129     0       0 0.373
+: 5  5 0.26 0.136161     0       0 0.369
+: 6  6   NA 0.010609     3       3 0.103
+
+
+
+*** Removing missing values (cont'd)				    :B_frame:
+    :PROPERTIES:
+    :BEAMER_env: frame
+    :BEAMER_envargs: [shrink = 20]
+    :END:
+#+BEGIN_SRC R 
+dTeachExp.missing[!is.na(dTeachExp.missing$T), ][1:6,]
+#+END_SRC
+
+#+results:
+:   ID     T        V weeks weekcat    SE
+: 2  2  0.12 0.021609    21      NA 0.147
+: 4  4  1.18 0.139129     0       0 0.373
+: 5  5  0.26 0.136161     0       0 0.369
+: 7  7 -0.02 0.010609    17       3 0.103
+: 8  8 -0.32 0.048400    24       3 0.220
+: 9  9  0.27 0.026896     0       0 0.164
+
+
+#+BEGIN_SRC R 
+na.omit(dTeachExp.missing)[1:6,]
+#+END_SRC
+
+#+results:
+:    ID     T        V weeks weekcat    SE
+: 4   4  1.18 0.139129     0       0 0.373
+: 5   5  0.26 0.136161     0       0 0.369
+: 7   7 -0.02 0.010609    17       3 0.103
+: 8   8 -0.32 0.048400    24       3 0.220
+: 9   9  0.27 0.026896     0       0 0.164
+: 10 10  0.80 0.063001     1       1 0.251
+
+
+
+*** Removing variables						    :B_frame:
+    :PROPERTIES:
+    :BEAMER_env: frame
+    :BEAMER_envargs: [shrink = 15]
+    :END:
+#+BEGIN_SRC R
+(dTeachExp.names <- names(dTeachExp))
+#+END_SRC
+
+#+results:
+: [1] "ID"      "T"       "V"       "weeks"   "weekcat" "SE"
+
+    Remove the 1. and 3. variable
+#+BEGIN_SRC R
+dTeachExp[1:2, c(dTeachExp.names)[-c(1,3)]]
+#+END_SRC
+
+#+results:
+:      T weeks weekcat    SE
+: 1 0.03     2       2 0.125
+: 2 0.12    21       3 0.147
+
+     Remove =weeks= and =weekcat=.
+#+BEGIN_SRC R
+!(dTeachExp.names %in% c("weeks", "weekcat"))
+#+END_SRC
+
+#+results:
+: [1]  TRUE  TRUE  TRUE FALSE FALSE  TRUE
+
+#+BEGIN_SRC R
+dTeachExp[1:2,!(dTeachExp.names %in% c("weeks", "weekcat"))]
+#+END_SRC
+
+#+results:
+:   ID    T        V    SE
+: 1  1 0.03 0.015625 0.125
+: 2  2 0.12 0.021609 0.147
+
+#+begin_LaTeX
+\infobox{\href{http://www.statmethods.net/management/subset.html}{Quick-R on Excluding (DROPPING) Variables}}
+#+end_LaTeX
+
+
+
+* Descriptive statistics
+
+** 
+
+*** Make up some data
+    The next few slides will rely on some fake data. 
+    #+BEGIN_SRC R
+    df.fake <- data.frame(
+               x = rnorm(10), # standard normal distr.
+               y = rnorm(10, mean = 10, sd = 5),
+               sex = factor(rep(c("f", "m"), 5))
+               )
+    df.fake[1:4, ] # show rows 1 to 4
+    #+END_SRC
+
+    #+RESULTS:
+    #+begin_example
+		x         y sex
+    1   1.0602120  4.167895   f
+    2  -0.4195017 11.885505   m
+    3   1.3068230  7.731882   f
+    4   1.4028825  1.864348   m
+    5  -0.9328214 10.366510   f
+    6  -0.4926540 15.668302   m
+    7   0.2147807 12.763081   f
+    8   1.8915390 18.739016   m
+    9  -0.2425316  8.952724   f
+    10  1.0446102  6.828468   m
+    #+end_example
+
+** Mean, median & Co
+
+*** The =summary()= function					    :B_frame:
+    :PROPERTIES:
+    :BEAMER_env: frame
+    :BEAMER_envargs: [shrink=5]
+    :END:
+    #+BEGIN_SRC R
+    summary(df.fake)
+    #+END_SRC
+
+    #+RESULTS:
+    :        x                 y          sex  
+    :  Min.   :-2.2697   Min.   : 3.407   f:5  
+    :  1st Qu.:-0.9146   1st Qu.: 9.346   m:5  
+    :  Median : 0.6377   Median :12.788        
+    :  Mean   : 0.1850   Mean   :11.687        
+    :  3rd Qu.: 0.8431   3rd Qu.:14.825        
+    :  Max.   : 2.2676   Max.   :16.517
+
+    #+BEGIN_SRC R
+    summary(df.fake$x)
+    #+END_SRC
+
+    #+RESULTS:
+    :     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+    : -0.78330 -0.22930  0.08223  0.10570  0.52760  1.06400
+
+
+*** The =mean()= and =median()= functions
+    #+BEGIN_SRC R
+    mean(df.fake$x)
+    mean(df.fake$y)
+    #+END_SRC
+
+
+
+* Reproducible research (RR) and workflow
+
+** Some basics
+
+*** What is reproducible research?
+
+    \enquote{By reproducible research, we mean research papers with accompanying software tools that allow the
+    reader to directly reproduce the results and employ the methods that are presented in the research
+    paper} (Gentleman/Lang 2004: 1). 
+
+
+*** Requirements for the workflow: TREMMP
+    \small
+    - Transparency (e.g., by using dynamic documents, "The source code is real")
+    - Reproducibility (e.g., by using dynamic documents, "The source code is real")
+    - Efficiency (a good workflow saves you time, by automating as much of the process as possible)
+    - Maintainability (standardized script names, good commenting practices, README files)
+    - Modularity (discrete tasks into separate components (e.g. scripts))
+    - Portability (e.g., by using relative (not absolute) pathnames)
+      \vfill
+      \tiny
+      (Source: David Smith on "A workflow for R": http://blog.revolutionanalytics.com/2010/10/a-workflow-for-r.html)
+
+
+*** The source code is real
+    \enquote{The source code is real. The objects are realizations of the source code. Source for EVERY user
+    modified object is placed in a particular directory or directories, for later editing and retrieval}
+    (Rossini et al. 2011:[[http://ess.r-project.org/Manual/ess.html][ ESS - Emacs Speaks Statistics - Manual]])
+
+
+*** Use =source()= to read R code from a file
+    The R console can be used for short and temporary tests. In order to
+    establish a TREMMP workflow, however, it is required to write R programs and
+    to =source= them. So, use =source(file = "myfile.R")= to run an external R
+    program. In SPSS, you would create an =.sps=-file, in Stata a =.do=-file.
+
+
+
+** \LaTeX in 5 minutes
+
+*** What is \LaTeX
+**** \LaTeX{} is a markup language. Another markup language you might know is HTML.
+**** \LaTeX{} provides high-quality typesetting features. 
+**** The typical workflow is as follows: 
+     1. Create \LaTeX{} source code file (=.tex=)
+     2. Compile it via \LaTeX{} or pdf\LaTeX
+     3. Use a viewer (PDF, DVI or via dvips PS) to view the compiled file
+**** In order to run \LaTeX{} on your computer, you will need to install a 
+     \LaTeX-distribution (e.g., Mik\TeX{} for MS-Windows).  
+
+
+*** 
+    #+attr_latex: width=\textwidth
+    #+results:
+    [[file:../graph/tex-workflow.pdf]]
+
+    Source: http://media.texample.net/tikz/examples/PDF/tex-workflow.pdf
+
+
+*** What a \LaTeX{} file looks like				    :B_frame:
+   :PROPERTIES:
+   :BEAMER_env: frame
+   :BEAMER_envargs: [shrink = 5]
+   :END:
+    #+BEGIN_SRC latex :results none :exports code :tangle ../src/tex/hello_world.tex
+    %% Part 1: Preamble
+    \documentclass{article} 
+    
+    \usepackage[utf8]{inputenc}  
+    \usepackage[T1]{fontenc}
+    \usepackage[english]{babel}
+    
+    %% Part 2: Body 
+    \begin{document}
+    
+    \section{Heading} 
+    
+    Hello world!
+    
+    \begin{equation}
+    \overline{T} = \frac{\sum\limits^{k}_{i = 1} %
+      T_{i}\cdot w_{i}}{\sum\limits^{k}_{i = 1}w_{i}}
+    \end{equation}
+    
+    \end{document}
+    #+END_SRC 
+
+    #+results:
+    #+BEGIN_LaTeX
+    %% Part 1: Preamble
+    \documentclass{article} 
+    
+    \usepackage[utf8]{inputenc}  
+    \usepackage[T1]{fontenc}
+    \usepackage[english]{babel}
+    
+    %% Part 2: Body 
+    \begin{document}
+    
+    \section{Heading} 
+    
+    Hello world!
+    
+    \begin{equation}
+    \overline{T} = \frac{\sum\limits^{k}_{i = 1} %
+    T_{i}\cdot w_{i}}{\sum\limits^{k}_{i = 1}w_{i}}
+\end{equation}
+
+\end{document}
+#+END_LaTeX
+
+
+*** The compiled 'Hello world'-example
+
+    #+BEGIN_LaTeX 
+    \frame{\includegraphics[clip, scale = 0.25]{../graph/hello_world.pdf}}
+    #+END_LaTeX
+
+
+
+* Useful books and websites
+** 
+*** Useful books or websites 
+    - Websites
+      - [[http://cran.r-project.org/manuals.html][The R Manuals]] (esp. An Introduction to R)
+      - [[http://www.statmethods.net/][Quick-R]]
+      - [[http://www.personality-project.org/R/][Using R for psychological research: A simple guide to an elegant package]]
+      - [[http://rforsasandspssusers.com/][R for SAS and SPSS users]] (see "Free Version")
+      - See also the [[http://wiki.r-project.org/][R Wiki]]
+      - \ldots
+    - Books
+      - [[http://rforsasandspssusers.com/][R for SAS and SPSS users]] by RA Muenchen
+      - [[http://staff.pubhealth.ku.dk/~pd/ISwR.html][Introductory Statistics with R]] by P Dalgaard
+      - See also [[http://www.r-project.org/doc/bib/R-books.html][Books related to R]]
+      - \ldots
+
+
+* Footnotes
+[fn:1] Works in most but not all cases.
+

@@ -1,0 +1,8 @@
+* Yet another short introduction to R with some emphasis on meta-analysis
+
+- data :: Raudenbush's (1984) "Teacher expectancy data" as SPSS file (dTeachExpRed.sav).
+- graphs :: R plots and screen shots.
+- report :: The presentation slides as PDF and org-mode file.
+- src :: Tangled R code. Note, that R files ending with "_nonorg.R" are more "human-readable".
+
+
