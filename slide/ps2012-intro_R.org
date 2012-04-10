@@ -334,25 +334,23 @@ oTtest$p.value
    :BEAMER_envargs: [shrink = 15]
    :END:
     - Scalar
-    #+BEGIN_SRC R
-    x.scalar <- 1
-    x.scalar
-    #+END_SRC
+#+BEGIN_SRC R
+x.scalar <- 1
+x.scalar
+#+END_SRC
 
-    #+RESULTS:
-    : [1] 1
 
     - Vector
-    #+BEGIN_SRC R
-    x.vector <- c(1,2,3)
-    x.vector
-    #+END_SRC
+#+BEGIN_SRC R
+x.vector <- c(1,2,3)
+x.vector
+#+END_SRC
 
     - Factor (nominal scale; sth like =mean(x.factor)= does not work!)
-    #+BEGIN_SRC R
-    x.factor <- factor(c(1,2,3), labels = c("low", "middle", "high"))
-    x.factor
-    #+END_SRC
+#+BEGIN_SRC R
+x.factor <- factor(c(1,2,3), labels = c("low", "middle", "high"))
+x.factor
+#+END_SRC
 
 
     #+begin_LaTeX
@@ -381,35 +379,25 @@ oTtest$p.value
 
  
     - List (most complex data structure)
-    #+BEGIN_SRC R
-    x.list <- list(a = c(1,2,3), b = x.df)
-    x.list
-    #+END_SRC
-
-    #+RESULTS:
-    : $a
-    : [1] 1 2 3
-    : 
-    : $b
-    :   ID sex age
-    : 1  1   f  22
-    : 2  2   f  45
-    : 3  3   m  12
+#+BEGIN_SRC R
+x.list <- list(a = c(1,2,3), b = x.df)
+x.list
+#+END_SRC
 
 
 *** Missing data
     - The symbol =NA= (Not Available) represents missing values.
     - Unlike SPSS, most R functions do not use a listwise deletion strategy, e.g.: 
-    #+BEGIN_SRC R
-    x.na <- c(1,2,3, NA, 5)
-    mean(x.na)
-    #+END_SRC
+#+BEGIN_SRC R
+x.na <- c(1,2,3, NA, 5)
+mean(x.na)
+#+END_SRC
 
     However, if you specify =na.rm = TRUE= then =mean()= will calculate the mean:
 
-    #+BEGIN_SRC R
-    mean(x.na, na.rm = TRUE)
-    #+END_SRC
+#+BEGIN_SRC R
+mean(x.na, na.rm = TRUE)
+#+END_SRC
 
     #+begin_LaTeX
     \infobox{\href{http://www.statmethods.net/input/missingdata.html}{Quick-R on Missing data}
@@ -489,14 +477,14 @@ oTtest$p.value
     - =names()=: show column ("variable") names of data object
     - For a description see next slide
 
-    #+BEGIN_SRC  R
-    setwd("../data")
-    library(foreign)
-    dTeachExp <- read.spss(file = "dTeachExpRed.sav", 
-                           to.data.frame = TRUE, 
-                           use.value.labels = FALSE)
-    names(dTeachExp)
-    #+END_SRC
+#+BEGIN_SRC  R
+setwd("../data")
+library(foreign)
+dTeachExp <- read.spss(file = "dTeachExpRed.sav", 
+                       to.data.frame = TRUE, 
+                       use.value.labels = FALSE)
+names(dTeachExp)
+#+END_SRC
 
     #+RESULTS:
     : [1] "ID"      "T"       "V"       "weeks"   "weekcat"
