@@ -1,0 +1,23 @@
+
+# Babel settings
+#+PROPERTY: session *R*
+#+PROPERTY: tangle test.R
+#+PROPERTY: comments yes
+#+PROPERTY: results output
+#+PROPERTY: exports both
+
+#+BEAMER_FRAME_LEVEL: 1
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+latex_header: %%\mode<beamer>{\usetheme{Madrid}}
+
+#emacs --batch --load "e:/config/.emacs" --visit test.org --funcall org-export-as-pdf
+
+
+* test heading
+	lsals
+
+
+
