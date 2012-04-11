@@ -284,15 +284,19 @@ oTtest$p.value
 
 
 
-*** Packages
-    - R functions are stored in packages.
+*** Packages							    :B_frame:
+    :PROPERTIES:
+    :BEAMER_env: frame
+    :BEAMER_envargs: [shrink=5]
+    :END:
+    - Most R functions are stored in packages.
     - When you download R, it only comes with a very limited set of functions
       (e.g., it knows nothing about SPSS data files or meta-analysis).
     - To load a particular package, use a command like =library(meta)=.
     - However, before you can load a package, you have to install (download)
-      it. This can be done via =install.packages("meta")=.
-    - Whenever a new R session is started, the packages have to be loaded via =library(...)=.
-
+      it (only once). This can be done via =install.packages("meta")=.
+    - Whenever a new R session is started, the packages have to be loaded via
+      =library(...)=. 
 #+begin_LaTeX
 \infobox{
 \href{http://cran.r-project.org/doc/manuals/R-intro.html\#Packages}{AItR on packages}\\
@@ -412,10 +416,13 @@ mean(x.na, na.rm = TRUE)
 ** 
 *** Download and installation
     - R can be downloaded from the Comprehensive R Archive Network (CRAN). The process is as follows:
-      1. Choose a CRAN mirror (e.g., University of Tennessee, Knoxville, TN: http://mira.sunsite.utk.edu/CRAN/).
-      2. Choose a precompiled binary distribution (e.g., Windows).
-      3. Choose binaries for base distribution and then "Download R 2.12.0 for Windows".
-    - After downloading R-2.12.0-win.exe, execute the file. 
+      1. Go to http://www.r-project.org/, click on the link "CRAN", can be found
+         in the left navigation bar
+      2. Choose a CRAN mirror (e.g., Wirtschaftsuniversitaet Wien: http://cran.at.r-project.org/).
+      3. Choose a precompiled binary distribution ("Download and Install R") (e.g., Windows).
+      4. Choose binaries for base distribution and then "Download R 2.15.0 for
+         Windows". (I mostly choose the "patched" version, see "Other builds")
+    - After downloading R-2.15.0-win.exe, execute the file and enjoy! 
 
 
 *** Getting help
@@ -425,7 +432,7 @@ mean(x.na, na.rm = TRUE)
     - The package =sos= offers the function =findFn()= which is much more flexible than =help.search()=,
      (e.g., =findFn("meta-analysis")=).
     - CRAN Task Views give an overview with respect to a certain topic (e.g.,
-  [[http://cran.r-project.org/web/views/SocialSciences.html][    "CRAN Task View: Statistics for the Social Sciences"]]) or
+  [[http://cran.r-project.org/web/views/SocialSciences.html][    "CRAN Task View: Statistics for the Social Sciences"]] or
   [[http://cran.r-project.org/web/views/Psychometrics.html]["CRAN Task View: Psychometric Models and
   Methods"]]).   
 

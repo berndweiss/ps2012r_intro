@@ -1,4 +1,4 @@
-% Created 2012-04-09 Mo 09:54
+% Created 2012-04-11 Mi 14:33
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -216,7 +216,8 @@ sites covering a very wide range of modern statistics} (\href{http://www.r-proje
 
 \begin{itemize}
 \item \enquote{\texttt{<-}} means \enquote{assign}
-\item If you type in the object's name, R prints out its value\footnote{Works in most but not all cases. }
+\item If you type in the object's name, R prints out its value\footnote{Works in most but not all cases.
+ }
 \item \enquote{[\ldots{}]} denotes R output (here, 1, only one element is shown)
 \item \enquote{\#} is used for comments
 \end{itemize}
@@ -305,13 +306,13 @@ oTtest
         Welch Two Sample t-test
 
 data:  rnorm(100) by sample(0:1, 100, replace = TRUE) 
-t = 0.1574, df = 80.38, p-value = 0.8753
+t = -0.6731, df = 71.75, p-value = 0.5031
 alternative hypothesis: true difference in means is not equal to 0 
 95 percent confidence interval:
- -0.3430843  0.4020391 
+ -0.5625451  0.2785620 
 sample estimates:
 mean in group 0 mean in group 1 
-      0.0420508       0.0125734
+    0.009104105     0.151095638
 \end{verbatim}
 
 
@@ -324,8 +325,8 @@ oTtest$statistic
 \end{lstlisting}
 
 \begin{verbatim}
-        t 
- 0.157444
+          t 
+ -0.6730934
 \end{verbatim}
 
 \ldots or the p-value.
@@ -337,23 +338,23 @@ oTtest$p.value
 \end{lstlisting}
 
 \begin{verbatim}
- [1] 0.8752897
+ [1] 0.5030502
 \end{verbatim}
 \end{frame}
-\begin{frame}
+\begin{frame}[shrink=5]
 \frametitle{Packages}
 \label{sec-1-2-6}
 
 \begin{itemize}
-\item R functions are stored in packages.
+\item Most R functions are stored in packages.
 \item When you download R, it only comes with a very limited set of functions
       (e.g., it knows nothing about SPSS data files or meta-analysis).
 \item To load a particular package, use a command like \texttt{library(meta)}.
 \item However, before you can load a package, you have to install (download)
-      it. This can be done via \texttt{install.packages("meta")}.
-\item Whenever a new R session is started, the packages have to be loaded via \texttt{library(...)}.
+      it (only once). This can be done via \texttt{install.packages("meta")}.
+\item Whenever a new R session is started, the packages have to be loaded via
+      \texttt{library(...)}.
 \end{itemize}
-
 \infobox{
 \href{http://cran.r-project.org/doc/manuals/R-intro.html\#Packages}{AItR on packages}\\
 \href{http://www.statmethods.net/interface/packages.html}{Quick-R on packages}\\
@@ -410,8 +411,9 @@ x.scalar
 \end{lstlisting}
 
 \begin{verbatim}
-         [1] 1
+ [1] 1
 \end{verbatim}
+
 
 \begin{itemize}
 \item Vector
@@ -424,7 +426,7 @@ x.vector
 \end{lstlisting}
 
 \begin{verbatim}
-         [1] 1 2 3
+ [1] 1 2 3
 \end{verbatim}
 
 \begin{itemize}
@@ -438,8 +440,8 @@ x.factor
 \end{lstlisting}
 
 \begin{verbatim}
-         [1] low    middle high  
-     Levels: low middle high
+ [1] low    middle high  
+ Levels: low middle high
 \end{verbatim}
 
 
@@ -479,14 +481,14 @@ x.list
 \end{lstlisting}
 
 \begin{verbatim}
-         $a
-     [1] 1 2 3
-     
-     $b
-       ID sex age
-     1  1   f  22
-     2  2   f  45
-     3  3   m  12
+ $a
+ [1] 1 2 3
+ 
+ $b
+   ID sex age
+ 1  1   f  22
+ 2  2   f  45
+ 3  3   m  12
 \end{verbatim}
 \end{frame}
 \begin{frame}[fragile]
@@ -505,7 +507,7 @@ mean(x.na)
 \end{lstlisting}
 
 \begin{verbatim}
-         [1] NA
+ [1] NA
 \end{verbatim}
 
     However, if you specify \texttt{na.rm = TRUE} then \texttt{mean()} will calculate the mean:
@@ -517,7 +519,7 @@ mean(x.na, na.rm = TRUE)
 \end{lstlisting}
 
 \begin{verbatim}
-         [1] 2.75
+ [1] 2.75
 \end{verbatim}
 
     \infobox{\href{http://www.statmethods.net/input/missingdata.html}{Quick-R on Missing data}
@@ -533,11 +535,14 @@ mean(x.na, na.rm = TRUE)
 \begin{itemize}
 \item R can be downloaded from the Comprehensive R Archive Network (CRAN). The process is as follows:
 \begin{enumerate}
-\item Choose a CRAN mirror (e.g., University of Tennessee, Knoxville, TN: \href{http://mira.sunsite.utk.edu/CRAN/}{http://mira.sunsite.utk.edu/CRAN/}).
-\item Choose a precompiled binary distribution (e.g., Windows).
-\item Choose binaries for base distribution and then \enquote{Download R 2.12.0 for Windows}.
+\item Go to \href{http://www.r-project.org/}{http://www.r-project.org/}, click on the link \enquote{CRAN}, can be found
+         in the left navigation bar
+\item Choose a CRAN mirror (e.g., Wirtschaftsuniversitaet Wien: \href{http://cran.at.r-project.org/}{http://cran.at.r-project.org/}).
+\item Choose a precompiled binary distribution (\enquote{Download and Install R}) (e.g., Windows).
+\item Choose binaries for base distribution and then \enquote{Download R 2.15.0 for
+         Windows}. (I mostly choose the \enquote{patched} version, see \enquote{Other builds})
 \end{enumerate}
-\item After downloading R-2.12.0-win.exe, execute the file.
+\item After downloading R-2.15.0-win.exe, execute the file and enjoy!
 \end{itemize}
 \end{frame}
 \begin{frame}
@@ -552,7 +557,7 @@ mean(x.na, na.rm = TRUE)
      (e.g., \texttt{findFn("meta-analysis")}).
 \item CRAN Task Views give an overview with respect to a certain topic (e.g.,
 \end{itemize}
-  \href{http://cran.r-project.org/web/views/SocialSciences.html}{    \enquote{CRAN Task View: Statistics for the Social Sciences}}) or
+  \href{http://cran.r-project.org/web/views/SocialSciences.html}{    \enquote{CRAN Task View: Statistics for the Social Sciences}} or
   \href{http://cran.r-project.org/web/views/Psychometrics.html}{\enquote{CRAN Task View: Psychometric Models and Methods}}).   
 
 \infobox{\href{http://www.statmethods.net/interface/help.html}{Quick-R on Getting Help}}
@@ -975,11 +980,11 @@ df.fake[1:4, ] # show rows 1 to 4
 \end{lstlisting}
 
 \begin{verbatim}
-                    x         y sex
-     1  0.3030082  3.711373   f
-     2  0.1472815  9.260739   m
-     3 -1.4600131 13.344104   f
-     4  0.8182952  6.155728   m
+                    x        y sex
+     1 -0.8173572 17.15267   f
+     2  0.8153246 17.55166   m
+     3 -1.2207541 14.54263   f
+     4 -0.7121485  3.40804   m
 \end{verbatim}
 \end{frame}
 \subsection{Mean, median \& Co}
@@ -995,13 +1000,13 @@ summary(df.fake)
 \end{lstlisting}
 
 \begin{verbatim}
-                x                 y           sex  
-      Min.   :-1.4600   Min.   : 0.3861   f:5  
-      1st Qu.:-1.0771   1st Qu.: 6.2413   m:5  
-      Median :-0.1659   Median : 8.8817        
-      Mean   :-0.2580   Mean   : 8.5273        
-      3rd Qu.: 0.3590   3rd Qu.:12.3132        
-      Max.   : 1.1605   Max.   :13.3441
+                x                  y          sex  
+      Min.   :-1.22075   Min.   : 3.408   f:5  
+      1st Qu.:-0.70810   1st Qu.: 9.108   m:5  
+      Median :-0.04053   Median :12.364        
+      Mean   :-0.09324   Mean   :11.904        
+      3rd Qu.: 0.47333   3rd Qu.:15.324        
+      Max.   : 0.93333   Max.   :17.552
 \end{verbatim}
 
 
@@ -1011,8 +1016,8 @@ summary(df.fake$x)
 \end{lstlisting}
 
 \begin{verbatim}
-            Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-     -1.4600 -1.0770 -0.1659 -0.2580  0.3590  1.1610
+             Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+     -1.22100 -0.70810 -0.04053 -0.09324  0.47330  0.93330
 \end{verbatim}
 \end{frame}
 \begin{frame}[fragile]
@@ -1027,8 +1032,8 @@ mean(df.fake$y)
 \end{lstlisting}
 
 \begin{verbatim}
-         [1] -0.2580455
-     [1] 8.527256
+         [1] -0.09324252
+     [1] 11.90395
 \end{verbatim}
 \end{frame}
 \section{Reproducible research (RR) and workflow}
