@@ -1,9 +1,18 @@
 * YasiR -- Yet another short introduction to R
 
+** Content
+
 - data :: Raudenbush's (1984) "Teacher expectancy data" as SPSS file (dTeachExpRed.sav).
 - graph :: R plots and screen shots.
 - slide :: The presentation slides as PDF and org-mode file.
 - src :: Tangled R code. Note, that R files ending with "_nonorg.R" are more "human-readable".
 - test :: can be ignored; will be removed later
 
+** TODOs
 
+- R graphics (base, grid: lattice and ggplot2)
+- Writing R functions
+- Some notes on R style guides and my own preferences
+- Merging data sets
+- *apply and plyr
+- ...
