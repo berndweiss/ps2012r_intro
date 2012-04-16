@@ -33,8 +33,8 @@
 #+LaTeX_CLASS: beamer
 #+LaTeX_CLASS_OPTIONS: [bigger]
 #+latex_header: %%\mode<beamer>{\usetheme{Madrid}}
-#latex_header: \usepackage{lucidabr}
 #+latex_header: \usepackage{marvosym}
+#+latex_header: \usepackage[scaled=0.92]{helvet}
 #+latex_header: \usepackage{cclicenses}
 #+LATEX_HEADER: \usepackage{csquotes}
 #+latex_header: \hypersetup{colorlinks=true, urlcolor=cyan, linkcolor=black}

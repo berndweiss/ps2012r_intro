@@ -1,4 +1,4 @@
-% Created 2012-04-16 Mo 09:52
+% Created 2012-04-16 Mo 13:08
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -18,6 +18,7 @@
 \usepackage{color}
 \usepackage{listings}
 %%\mode<beamer>{\usetheme{Madrid}}
+\usepackage[scaled=0.92]{helvet}
 \usepackage{marvosym}
 \usepackage{cclicenses}
 \usepackage{csquotes}
@@ -30,7 +31,7 @@
 \hypersetup{
   pdfkeywords={},
   pdfsubject={},
-  pdfcreator={Emacs Org-mode version 7.8.09}}
+  pdfcreator={Emacs Org-mode version 7.8.08}}
 
 \begin{document}
 
@@ -307,13 +308,13 @@ oTtest
         Welch Two Sample t-test
 
 data:  rnorm(100) by sample(0:1, 100, replace = TRUE) 
-t = -0.2202, df = 81.968, p-value = 0.8263
+t = -0.341, df = 97.99, p-value = 0.7339
 alternative hypothesis: true difference in means is not equal to 0 
 95 percent confidence interval:
- -0.4541498  0.3636313 
+ -0.4570725  0.3230416 
 sample estimates:
 mean in group 0 mean in group 1 
-     -0.1465792      -0.1013200
+    -0.05497059      0.01204489
 \end{verbatim}
 
 
@@ -327,7 +328,7 @@ oTtest$statistic
 
 \begin{verbatim}
           t 
- -0.2201947
+ -0.3409506
 \end{verbatim}
 
 \ldots or the p-value.
@@ -339,7 +340,7 @@ oTtest$p.value
 \end{lstlisting}
 
 \begin{verbatim}
- [1] 0.826267
+ [1] 0.7338707
 \end{verbatim}
 \end{frame}
 \begin{frame}[shrink=5]
@@ -679,7 +680,7 @@ head(dTeachExp) # prints first 6 cases
 \item \texttt{names()}: show column (\enquote{variable}) names of data object
 \item \texttt{dim()}: Retrieve (or set) the dimension of an R object, i.e. for an
       object of type \texttt{data.frame} it returns the number of rows and columns.
-\item \texttt{head(n})=: show first \texttt{n} cases
+\item \texttt{head()}: show first \texttt{n} cases (default is \texttt{n=6})
 \end{itemize}
 \end{frame}
 \begin{frame}[fragile,shrink=5]
@@ -1003,10 +1004,10 @@ df.fake[1:4, ] # show rows 1 to 4
 
 \begin{verbatim}
                     x         y sex
-     1  0.4193362 12.518774   f
-     2 -0.6164952  9.229247   m
-     3  0.4345107  7.928392   f
-     4  0.9799077 11.600855   m
+     1  0.2434808 16.860472   f
+     2 -0.8632959  7.169341   m
+     3 -0.2107243  4.684020   f
+     4 -0.6146973 10.721603   m
 \end{verbatim}
 \end{frame}
 \subsection{Mean, median \& Co}
@@ -1023,12 +1024,12 @@ summary(df.fake)
 
 \begin{verbatim}
                 x                  y          sex  
-      Min.   :-1.33138   Min.   : 7.928   f:5  
-      1st Qu.:-0.56148   1st Qu.: 9.749   m:5  
-      Median :-0.09711   Median :10.785        
-      Mean   :-0.14979   Mean   :12.131        
-      3rd Qu.: 0.43072   3rd Qu.:13.229        
-      Max.   : 0.97991   Max.   :18.844
+      Min.   :-1.58721   Min.   : 3.905   f:5  
+      1st Qu.:-0.75659   1st Qu.: 6.875   m:5  
+      Median :-0.05943   Median : 9.371        
+      Mean   :-0.07091   Mean   : 9.929        
+      3rd Qu.: 0.21711   3rd Qu.:11.043        
+      Max.   : 2.21622   Max.   :19.279
 \end{verbatim}
 
 
@@ -1039,7 +1040,7 @@ summary(df.fake$x)
 
 \begin{verbatim}
              Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-     -1.33100 -0.56150 -0.09711 -0.14980  0.43070  0.97990
+     -1.58700 -0.75660 -0.05943 -0.07091  0.21710  2.21600
 \end{verbatim}
 \end{frame}
 \begin{frame}[fragile]
@@ -1054,8 +1055,8 @@ mean(df.fake$y)
 \end{lstlisting}
 
 \begin{verbatim}
-         [1] -0.1497879
-     [1] 12.13077
+         [1] -0.07091068
+     [1] 9.928677
 \end{verbatim}
 \end{frame}
 \section{Reproducible research (RR) and workflow}
