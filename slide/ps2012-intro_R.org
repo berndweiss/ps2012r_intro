@@ -1,14 +1,16 @@
-#+TITLE:     YasiR -- Yet another short introduction to R
-#+AUTHOR:    Bernd Weiss\\\url{bernd.weiss@uni-koeln.de}\\Research Institute for Sociology\\University of Cologne\\Germany
-#+EMAIL:     bernd.weiss@uni-koeln.de
-#+DATE:      2012-04-11 \vfill \byncsa 
+#+TITLE:     YasiR: Yet another short introduction to R
+#+AUTHOR:    Bernd Weiss\\\url{bernd.weiss@uni-koeln.de}\\Research Institute for Sociology\\University of Cologne\\Germany\\\vfill\byncsa\vfill
+#+EMAIL:     bernd.weiss@uni-koeln.de   
+#
+#DATE:      
+#
 
 #+DESCRIPTION: 
 #+STARTUP: hidestars
 #+PROPERTY: COOKIE_DATA recursive
 #+KEYWORDS: 
 #+LANGUAGE:  en
-#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t timestamp:t
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
@@ -126,6 +128,7 @@ helpful in answering my questions or fixing bugs.
 *** Objectives
     - Introduce /some/ basic concepts of R
     - Show some common steps in data preparation and data analysis (esp. meta-analysis)
+    - Introduce my (R) data analysis workflow philosophy
     - Present some showcases which cover advanced usage of R
 
 
@@ -412,7 +415,7 @@ mean(x.na, na.rm = TRUE)
 
 
 
-* Installation, help and maintenance
+* Installation, help, maintenance and interacting with R 
 ** 
 *** Download and installation
     - R can be downloaded from the Comprehensive R Archive Network (CRAN). The process is as follows:
@@ -448,11 +451,22 @@ mean(x.na, na.rm = TRUE)
 
 
 
-*** Text editors (or: How to interact with R)
-    Use a text editor which (at least) offers syntax highlighting. 
-    - A recommended solution is RStudio (see next slide; can be downloaded from XXX)
-    - My preferred solution is Emacs + [[http://ess.r-project.org/][ESS]].
-    - See also [[http://www.sciviews.org/_rgui/][The R GUI Projects website]]. 
+*** How to interact with R					    :B_frame:
+    :PROPERTIES:
+    :BEAMER_env: frame
+    :BEAMER_envargs: [shrink=5]
+    :END:
+    (some statements refer to MS Windows only)
+    - Use the R console to type in R commands (REPL = read-eval-print loop).
+    - Use the built-in R script editor (see File - New script) to enter a (longer)
+      sequence of R commands. Mark the lines which you want to run and press
+      CTRL + r (STRG + r). This R script can be saved on you computer.
+    - An R script can also be "sourced", i.e. you can run the command
+      =source("myRscript.R")= (in Stata: =use myStataFile.do=).
+    - Use a text editor which (at least) offers syntax highlighting. 
+      - A recommended solution is RStudio (see next slide; can be downloaded from http://rstudio.org/)
+      - My preferred solution is Emacs + [[http://ess.r-project.org/][ESS]].
+      - See also [[http://www.sciviews.org/_rgui/][The R GUI Projects website]]. 
 
 
 *** RStudio
@@ -503,7 +517,7 @@ names(dTeachExp)
 
 
 
-*** Inspect your data
+*** Inspect your data I
     #+BEGIN_SRC R
     head(dTeachExp) # prints first 6 cases
     #+END_SRC
@@ -519,6 +533,14 @@ names(dTeachExp)
 
     Another way to inspect your data is =edit()= or =fix()= (be careful not to
     modify your data unintentionally). 
+
+
+*** Inspect your data II
+    Here is a list of useful R functions to learn more about your data (object):
+    - =names()=: show column ("variable") names of data object
+    - =dim()=: Retrieve (or set) the dimension of an R object, i.e. for an
+      object of type =data.frame= it returns the number of rows and columns.
+    - =head()=: show first =n= cases (default is =n=6=) 
 
 
 *** Accessing elements of a data frame				    :B_frame:
@@ -878,6 +900,9 @@ dTeachExp[1:2,!(dTeachExp.names %in% c("weeks", "weekcat"))]
     program. In SPSS, you would create an =.sps=-file, in Stata a =.do=-file.
 
 
+*** More on reproducible research
+    - Kieran Healy: "Choosing Your Work􀃸ow Applications"  http://www.kieranhealy.org/files/misc/workflow-apps.pdf
+    - ... to be continued ...
 
 ** \LaTeX in 5 minutes
 

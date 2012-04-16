@@ -1,4 +1,4 @@
-% Created 2012-04-11 Mi 14:33
+% Created 2012-04-16 Mo 09:52
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -24,13 +24,13 @@
 \hypersetup{colorlinks=true, urlcolor=cyan, linkcolor=black}
 \providecommand{\alert}[1]{\textbf{#1}}
 
-\title{YasiR -- Yet another short introduction to R}
-\author{Bernd Weiss\\\url{bernd.weiss@uni-koeln.de}\\Research Institute for Sociology\\University of Cologne\\Germany}
-\date{2012-04-11 \vfill \byncsa }
+\title{YasiR: Yet another short introduction to R}
+\author{Bernd Weiss\\\url{bernd.weiss@uni-koeln.de}\\Research Institute for Sociology\\University of Cologne\\Germany\\\vfill\byncsa\vfill}
+\date{\today}
 \hypersetup{
   pdfkeywords={},
   pdfsubject={},
-  pdfcreator={Emacs Org-mode version 7.8.08}}
+  pdfcreator={Emacs Org-mode version 7.8.09}}
 
 \begin{document}
 
@@ -133,6 +133,7 @@ helpful in answering my questions or fixing bugs.
 \begin{itemize}
 \item Introduce \emph{some} basic concepts of R
 \item Show some common steps in data preparation and data analysis (esp. meta-analysis)
+\item Introduce my (R) data analysis workflow philosophy
 \item Present some showcases which cover advanced usage of R
 \end{itemize}
 \end{frame}
@@ -306,13 +307,13 @@ oTtest
         Welch Two Sample t-test
 
 data:  rnorm(100) by sample(0:1, 100, replace = TRUE) 
-t = -0.6731, df = 71.75, p-value = 0.5031
+t = -0.2202, df = 81.968, p-value = 0.8263
 alternative hypothesis: true difference in means is not equal to 0 
 95 percent confidence interval:
- -0.5625451  0.2785620 
+ -0.4541498  0.3636313 
 sample estimates:
 mean in group 0 mean in group 1 
-    0.009104105     0.151095638
+     -0.1465792      -0.1013200
 \end{verbatim}
 
 
@@ -326,7 +327,7 @@ oTtest$statistic
 
 \begin{verbatim}
           t 
- -0.6730934
+ -0.2201947
 \end{verbatim}
 
 \ldots or the p-value.
@@ -338,7 +339,7 @@ oTtest$p.value
 \end{lstlisting}
 
 \begin{verbatim}
- [1] 0.5030502
+ [1] 0.826267
 \end{verbatim}
 \end{frame}
 \begin{frame}[shrink=5]
@@ -525,7 +526,7 @@ mean(x.na, na.rm = TRUE)
     \infobox{\href{http://www.statmethods.net/input/missingdata.html}{Quick-R on Missing data}
     }
 \end{frame}
-\section{Installation, help and maintenance}
+\section{Installation, help, maintenance and interacting with R}
 \label{sec-2}
 \subsection{}
 \begin{frame}
@@ -571,15 +572,24 @@ mean(x.na, na.rm = TRUE)
 \item Updating packages is easy via \texttt{update.packages()}.
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{Text editors (or: How to interact with R)}
+\begin{frame}[shrink=5]
+\frametitle{How to interact with R}
 \label{sec-2-1-4}
 
-    Use a text editor which (at least) offers syntax highlighting. 
+    (some statements refer to MS Windows only)
 \begin{itemize}
-\item A recommended solution is RStudio (see next slide; can be downloaded from XXX)
+\item Use the R console to type in R commands (REPL = read-eval-print loop).
+\item Use the built-in R script editor (see File - New script) to enter a (longer)
+      sequence of R commands. Mark the lines which you want to run and press
+      CTRL + r (STRG + r). This R script can be saved on you computer.
+\item An R script can also be \enquote{sourced}, i.e. you can run the command
+      \texttt{source("myRscript.R")} (in Stata: \texttt{use myStataFile.do}).
+\item Use a text editor which (at least) offers syntax highlighting.
+\begin{itemize}
+\item A recommended solution is RStudio (see next slide; can be downloaded from \href{http://rstudio.org/}{http://rstudio.org/})
 \item My preferred solution is Emacs + \href{http://ess.r-project.org/}{ESS}.
 \item See also \href{http://www.sciviews.org/_rgui/}{The R GUI Projects website}.
+\end{itemize}
 \end{itemize}
 \end{frame}
 \begin{frame}
@@ -638,7 +648,7 @@ names(dTeachExp)
     XXX
 \end{frame}
 \begin{frame}[fragile]
-\frametitle{Inspect your data}
+\frametitle{Inspect your data I}
 \label{sec-3-1-4}
 
 
@@ -660,9 +670,21 @@ head(dTeachExp) # prints first 6 cases
     Another way to inspect your data is \texttt{edit()} or \texttt{fix()} (be careful not to
     modify your data unintentionally). 
 \end{frame}
+\begin{frame}
+\frametitle{Inspect your data II}
+\label{sec-3-1-5}
+
+    Here is a list of useful R functions to learn more about your data (object):
+\begin{itemize}
+\item \texttt{names()}: show column (\enquote{variable}) names of data object
+\item \texttt{dim()}: Retrieve (or set) the dimension of an R object, i.e. for an
+      object of type \texttt{data.frame} it returns the number of rows and columns.
+\item \texttt{head(n})=: show first \texttt{n} cases
+\end{itemize}
+\end{frame}
 \begin{frame}[fragile,shrink=5]
 \frametitle{Accessing elements of a data frame}
-\label{sec-3-1-5}
+\label{sec-3-1-6}
 
 \begin{itemize}
 \item Since R can handle many data objects, you first have to refer to a
@@ -713,7 +735,7 @@ dTeachExp[1:4,c("T", "weeks")] # access first 4 obs of T and weeks
 \end{frame}
 \begin{frame}
 \frametitle{Saving a dataset}
-\label{sec-3-1-6}
+\label{sec-3-1-7}
 
 \begin{itemize}
 \item \texttt{save(object, file = "filename")} saves a particular data (or a list of objects) object to the
@@ -980,11 +1002,11 @@ df.fake[1:4, ] # show rows 1 to 4
 \end{lstlisting}
 
 \begin{verbatim}
-                    x        y sex
-     1 -0.8173572 17.15267   f
-     2  0.8153246 17.55166   m
-     3 -1.2207541 14.54263   f
-     4 -0.7121485  3.40804   m
+                    x         y sex
+     1  0.4193362 12.518774   f
+     2 -0.6164952  9.229247   m
+     3  0.4345107  7.928392   f
+     4  0.9799077 11.600855   m
 \end{verbatim}
 \end{frame}
 \subsection{Mean, median \& Co}
@@ -1001,12 +1023,12 @@ summary(df.fake)
 
 \begin{verbatim}
                 x                  y          sex  
-      Min.   :-1.22075   Min.   : 3.408   f:5  
-      1st Qu.:-0.70810   1st Qu.: 9.108   m:5  
-      Median :-0.04053   Median :12.364        
-      Mean   :-0.09324   Mean   :11.904        
-      3rd Qu.: 0.47333   3rd Qu.:15.324        
-      Max.   : 0.93333   Max.   :17.552
+      Min.   :-1.33138   Min.   : 7.928   f:5  
+      1st Qu.:-0.56148   1st Qu.: 9.749   m:5  
+      Median :-0.09711   Median :10.785        
+      Mean   :-0.14979   Mean   :12.131        
+      3rd Qu.: 0.43072   3rd Qu.:13.229        
+      Max.   : 0.97991   Max.   :18.844
 \end{verbatim}
 
 
@@ -1017,7 +1039,7 @@ summary(df.fake$x)
 
 \begin{verbatim}
              Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-     -1.22100 -0.70810 -0.04053 -0.09324  0.47330  0.93330
+     -1.33100 -0.56150 -0.09711 -0.14980  0.43070  0.97990
 \end{verbatim}
 \end{frame}
 \begin{frame}[fragile]
@@ -1032,8 +1054,8 @@ mean(df.fake$y)
 \end{lstlisting}
 
 \begin{verbatim}
-         [1] -0.09324252
-     [1] 11.90395
+         [1] -0.1497879
+     [1] 12.13077
 \end{verbatim}
 \end{frame}
 \section{Reproducible research (RR) and workflow}
@@ -1082,6 +1104,15 @@ mean(df.fake$y)
     establish a TREMMP workflow, however, it is required to write R programs and
     to \texttt{source} them. So, use \texttt{source(file = "myfile.R")} to run an external R
     program. In SPSS, you would create an \texttt{.sps}-file, in Stata a \texttt{.do}-file.
+\end{frame}
+\begin{frame}
+\frametitle{More on reproducible research}
+\label{sec-6-1-5}
+
+\begin{itemize}
+\item Kieran Healy: \enquote{Choosing Your Work􀃸ow Applications}  \href{http://www.kieranhealy.org/files/misc/workflow-apps.pdf}{http://www.kieranhealy.org/files/misc/workflow-apps.pdf}
+\item \ldots{} to be continued \ldots{}
+\end{itemize}
 \end{frame}
 \subsection{\LaTeX in 5 minutes}
 \label{sec-6-2}

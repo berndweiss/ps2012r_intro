@@ -1,23 +1,19 @@
 
 # Babel settings
 #+PROPERTY: session *R*
-#+PROPERTY: tangle test.R
+#+PROPERTY: tangle test_tangled.R
 #+PROPERTY: comments yes
 #+PROPERTY: results output
-#+PROPERTY: exports both
+#+PROPERTY: export
 
-#+BEAMER_FRAME_LEVEL: 1
+#+begin_src R
+setwd("E:/projects/software/ps2012r_intro/test")
+pdf("testplot.pdf")
+hist(rnorm(100))
+dev.off()
+#+end_src
 
-#+startup: beamer
-#+LaTeX_CLASS: beamer
-#+LaTeX_CLASS_OPTIONS: [bigger]
-#+latex_header: %%\mode<beamer>{\usetheme{Madrid}}
-
-#emacs --batch --load "e:/config/.emacs" --visit test.org --funcall org-export-as-pdf
-
-
-* test heading
-	lsals
-
-
+#+RESULTS:
+: null device 
+:           1
 
