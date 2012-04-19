@@ -988,7 +988,7 @@ dTeachExp[1:2,!(dTeachExp.names %in% c("weeks", "weekcat"))]
 
 * Useful books and websites
 ** 
-*** Useful books or websites 
+*** Books and websites (in English)
     - Websites
       - [[http://cran.r-project.org/manuals.html][The R Manuals]] (esp. An Introduction to R)
       - [[http://www.statmethods.net/][Quick-R]]
@@ -1001,6 +1001,11 @@ dTeachExp[1:2,!(dTeachExp.names %in% c("weeks", "weekcat"))]
       - [[http://staff.pubhealth.ku.dk/~pd/ISwR.html][Introductory Statistics with R]] by P Dalgaard
       - See also [[http://www.r-project.org/doc/bib/R-books.html][Books related to R]]
       - \ldots
+*** Books and websites (in German)
+    - Books
+      - Wikibooks GNU R: http://de.wikibooks.org/wiki/GNU_R
+    - Websites
+      - [[http://gauss.metpsy.uni-jena.de/metheval/wiki-metheval-hp/index.php/R_Einf%25C3%25BChrung][R Einführung von Metheval]] 
 
 
 * Footnotes
