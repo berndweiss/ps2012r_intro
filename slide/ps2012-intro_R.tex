@@ -1,4 +1,4 @@
-% Created 2012-04-16 Mo 13:08
+% Created 2012-04-22 So 17:30
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -18,10 +18,11 @@
 \usepackage{color}
 \usepackage{listings}
 %%\mode<beamer>{\usetheme{Madrid}}
-\usepackage[scaled=0.92]{helvet}
 \usepackage{marvosym}
+\usepackage[scaled=0.92]{helvet}
 \usepackage{cclicenses}
 \usepackage{csquotes}
+\usepackage{hyperref}
 \hypersetup{colorlinks=true, urlcolor=cyan, linkcolor=black}
 \providecommand{\alert}[1]{\textbf{#1}}
 
@@ -31,7 +32,7 @@
 \hypersetup{
   pdfkeywords={},
   pdfsubject={},
-  pdfcreator={Emacs Org-mode version 7.8.08}}
+  pdfcreator={Emacs Org-mode version 7.8.09}}
 
 \begin{document}
 
@@ -308,13 +309,13 @@ oTtest
         Welch Two Sample t-test
 
 data:  rnorm(100) by sample(0:1, 100, replace = TRUE) 
-t = -0.341, df = 97.99, p-value = 0.7339
+t = -1.2827, df = 98, p-value = 0.2026
 alternative hypothesis: true difference in means is not equal to 0 
 95 percent confidence interval:
- -0.4570725  0.3230416 
+ -0.6228781  0.1337866 
 sample estimates:
 mean in group 0 mean in group 1 
-    -0.05497059      0.01204489
+    -0.19150859      0.05303713
 \end{verbatim}
 
 
@@ -327,8 +328,8 @@ oTtest$statistic
 \end{lstlisting}
 
 \begin{verbatim}
-          t 
- -0.3409506
+         t 
+ -1.282716
 \end{verbatim}
 
 \ldots or the p-value.
@@ -340,7 +341,7 @@ oTtest$p.value
 \end{lstlisting}
 
 \begin{verbatim}
- [1] 0.7338707
+ [1] 0.2026171
 \end{verbatim}
 \end{frame}
 \begin{frame}[shrink=5]
@@ -610,8 +611,12 @@ mean(x.na, na.rm = TRUE)
 
 \begin{itemize}
 \item R can handle many different data formats, e.g. SPSS, Stata, SAS, all sorts of text formats or DBMS.
-\item However, many data formats require you to load a certain package which then provides a function to load the data.
+\item However, many data formats require you to load a certain package (e.g. \texttt{foreign}) which then provides a function to load the data.
 \item Whenever you load a specific dataset, you need to assign it to an object via \texttt{<-}.
+\item (\alert{Important!}) Since R is supposed to work on different platforms, do not use the
+      \textbackslash-symbol (backslash) to specify a certain file within a certain
+      folder. Instead, use \texttt{/} (slash) (or \texttt{\textbackslash{}\textbackslash{}}). This is okay:
+      \texttt{c:/myfolder/script.R} and this is not going to work: \texttt{c:\textbackslash{}myfolder\textbackslash{}script.R}
 \item The functions \texttt{fix()} and \texttt{edit()} open a MS-Excel-like datasheet (under MS-Windows).
 \end{itemize}
 \end{frame}
@@ -683,8 +688,8 @@ head(dTeachExp) # prints first 6 cases
 \item \texttt{head()}: show first \texttt{n} cases (default is \texttt{n=6})
 \end{itemize}
 \end{frame}
-\begin{frame}[fragile,shrink=5]
-\frametitle{Accessing elements of a data frame}
+\begin{frame}
+\frametitle{Accessing elements of a data frame I}
 \label{sec-3-1-6}
 
 \begin{itemize}
@@ -693,7 +698,17 @@ head(dTeachExp) # prints first 6 cases
       in.
 \item There is a more general and a more specific method of accessing elements
       of a data frame: the \texttt{[}- and the \texttt{\$}-operator.
+\item Using the \texttt{\$}-operator, you only can access \emph{one} element of the data
+      frame. Using the \texttt{[}-operator, though, allows you to access more than one
+      element.
+\item The use of \texttt{[}-operator depends on the number of dimensions of the R
+      object. The different dimensions are separated by commas.
 \end{itemize}
+\end{frame}
+\begin{frame}[fragile,shrink=30]
+\frametitle{Accessing elements of a data frame II}
+\label{sec-3-1-7}
+
 
 
 \lstset{language=R}
@@ -702,8 +717,8 @@ dTeachExp[,"T"] # access variable T
 \end{lstlisting}
 
 \begin{verbatim}
-          [1]  0.03  0.12 -0.14  1.18  0.26 -0.06 -0.02 -0.32  0.27  0.80  0.54  0.18
-     [13] -0.02  0.23 -0.18 -0.06  0.30  0.07 -0.07
+  [1]  0.03  0.12 -0.14  1.18  0.26 -0.06 -0.02 -0.32  0.27  0.80  0.54  0.18
+ [13] -0.02  0.23 -0.18 -0.06  0.30  0.07 -0.07
 \end{verbatim}
 
 
@@ -713,30 +728,28 @@ dTeachExp$T # access variable T, shortcut for dTeachExp[,"T"]
 \end{lstlisting}
 
 \begin{verbatim}
-          [1]  0.03  0.12 -0.14  1.18  0.26 -0.06 -0.02 -0.32  0.27  0.80  0.54  0.18
-     [13] -0.02  0.23 -0.18 -0.06  0.30  0.07 -0.07
+  [1]  0.03  0.12 -0.14  1.18  0.26 -0.06 -0.02 -0.32  0.27  0.80  0.54  0.18
+ [13] -0.02  0.23 -0.18 -0.06  0.30  0.07 -0.07
 \end{verbatim}
-
 
 
 \lstset{language=R}
 \begin{lstlisting}
-dTeachExp[1:4,c("T", "weeks")] # access first 4 obs of T and weeks
+dTeachExp[1:4, c("T", "weeks")] # access first 4 obs of T and weeks
+dTeachExp2 <- dTeachExp[1:4, c("T", "weeks")] # new data frame-object
 \end{lstlisting}
 
 \begin{verbatim}
-               T weeks
-     1  0.03     2
-     2  0.12    21
-     3 -0.14    19
-     4  1.18     0
+       T weeks
+ 1  0.03     2
+ 2  0.12    21
+ 3 -0.14    19
+ 4  1.18     0
 \end{verbatim}
-
- 
 \end{frame}
 \begin{frame}
 \frametitle{Saving a dataset}
-\label{sec-3-1-7}
+\label{sec-3-1-8}
 
 \begin{itemize}
 \item \texttt{save(object, file = "filename")} saves a particular data (or a list of objects) object to the
@@ -760,14 +773,14 @@ dTeachExp[1:4,c("T", "weeks")] # access first 4 obs of T and weeks
 \item Missing values
 \end{itemize}
 \end{frame}
-\begin{frame}[fragile]
+\begin{frame}[fragile,shrink=10]
 \frametitle{Creating new variables}
 \label{sec-4-1-2}
 
 
 \lstset{language=R}
 \begin{lstlisting}
-dTeachExp$SE <- sqrt(dTeachExp$V)
+dTeachExp$SE <- sqrt(dTeachExp$V) #or: dTeachExp[, "SE"]
 head(round(dTeachExp, digits = 2))
 \end{lstlisting}
 
@@ -782,14 +795,14 @@ head(round(dTeachExp, digits = 2))
 \end{verbatim}
 \end{frame}
 \begin{frame}[fragile]
-\frametitle{Removing cases I (subsetting/indexing)}
+\frametitle{Selecting/Removing cases I (subsetting/indexing)}
 \label{sec-4-1-3}
 
-    Relational (\texttt{<}, \texttt{>}, \texttt{<=}, \texttt{>=}, ==, !=) and logical operators (\texttt{\&}, \texttt{|}, \texttt{!}) can be used to remove certain cases.
+    Relational (\texttt{<}, \texttt{>}, \texttt{<=}, \texttt{>=}, ==, !=) and logical operators (\texttt{\&}, \texttt{|}, \texttt{!}) can be used to select/remove certain cases.
 
 \lstset{language=R}
 \begin{lstlisting}
-subset(dTeachExp, weekcat == 0)
+subset(dTeachExp, weekcat == 0) #Keep weekcat == 0
 \end{lstlisting}
 
 \begin{verbatim}
@@ -813,12 +826,12 @@ subset(dTeachExp, weekcat == 0 & T > 1)
  4  4 1.18 0.139129     0       0 0.373
 \end{verbatim}
 \end{frame}
-\begin{frame}[fragile]
-\frametitle{Removing cases II}
+\begin{frame}[fragile,shrink=10]
+\frametitle{Selecting/Removing cases II}
 \label{sec-4-1-4}
 
-    \texttt{subset()} is one way to create subsets. Another possibility is using the
-    \texttt{[}-operator. 
+    \texttt{subset()} is one way to create subsets. Another (and recommended)
+    possibility is to use the \texttt{[}-operator. 
 
 \lstset{language=R}
 \begin{lstlisting}
@@ -846,8 +859,8 @@ dTeachExp[dTeachExp$weekcat == 0 & dTeachExp$T > 1, ]
  4  4 1.18 0.139129     0       0 0.373
 \end{verbatim}
 \end{frame}
-\begin{frame}[fragile,shrink=0]
-\frametitle{Removing (or keeping) cases III}
+\begin{frame}[fragile,shrink=10]
+\frametitle{Selecting/Removing (or keeping) cases III}
 \label{sec-4-1-5}
 
     Say, you want to remove cases based on a list of person IDs. In that case, you can use the \texttt{\%in\%} function.
@@ -913,6 +926,8 @@ dTeachExp.missing[!is.na(dTeachExp.missing$T), ][1:6,]
  8  8 -0.32 0.048400    24       3 0.220
  9  9  0.27 0.026896     0       0 0.164
 \end{verbatim}
+
+(For more information on using \texttt{is.na()} or similar functions, see slide \pageref{slide_is_function}.)
 
 
 
@@ -1004,10 +1019,10 @@ df.fake[1:4, ] # show rows 1 to 4
 
 \begin{verbatim}
                     x         y sex
-     1  0.2434808 16.860472   f
-     2 -0.8632959  7.169341   m
-     3 -0.2107243  4.684020   f
-     4 -0.6146973 10.721603   m
+     1  1.1140798  3.054988   f
+     2 -0.1229896 25.024182   m
+     3 -0.7102524 -1.137744   f
+     4  0.1216345 16.244204   m
 \end{verbatim}
 \end{frame}
 \subsection{Mean, median \& Co}
@@ -1023,13 +1038,13 @@ summary(df.fake)
 \end{lstlisting}
 
 \begin{verbatim}
-                x                  y          sex  
-      Min.   :-1.58721   Min.   : 3.905   f:5  
-      1st Qu.:-0.75659   1st Qu.: 6.875   m:5  
-      Median :-0.05943   Median : 9.371        
-      Mean   :-0.07091   Mean   : 9.929        
-      3rd Qu.: 0.21711   3rd Qu.:11.043        
-      Max.   : 2.21622   Max.   :19.279
+                x                    y          sex  
+      Min.   :-1.0544641   Min.   :-1.138   f:5  
+      1st Qu.:-0.7403016   1st Qu.: 3.093   m:5  
+      Median :-0.0006776   Median :13.987        
+      Mean   : 0.1248365   Mean   :11.567        
+      3rd Qu.: 0.7936868   3rd Qu.:16.438        
+      Max.   : 1.9422180   Max.   :25.024
 \end{verbatim}
 
 
@@ -1039,8 +1054,8 @@ summary(df.fake$x)
 \end{lstlisting}
 
 \begin{verbatim}
-             Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-     -1.58700 -0.75660 -0.05943 -0.07091  0.21710  2.21600
+               Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+     -1.0540000 -0.7403000 -0.0006776  0.1248000  0.7937000  1.9420000
 \end{verbatim}
 \end{frame}
 \begin{frame}[fragile]
@@ -1055,17 +1070,46 @@ mean(df.fake$y)
 \end{lstlisting}
 
 \begin{verbatim}
-         [1] -0.07091068
-     [1] 9.928677
+         [1] 0.1248365
+     [1] 11.56673
+\end{verbatim}
+\end{frame}
+\section{(Some) Advanced functions of the R language}
+\label{sec-6}
+\subsection{}
+\begin{frame}[fragile,label=slide_is_function]
+\frametitle{The \texttt{is.*()} functions}
+\label{sec-6-1-1}
+
+\begin{itemize}
+\item Sometimes, we want to check some properties of an R object, e.g. is a
+      certain object of class \enquote{data frame} or does it contain missing values (\texttt{NA=s).     - R provides a number is =is.*()}-functions which perform these tests and
+      return a logical object (with values \texttt{TRUE} or \texttt{FALSE}).
+\item Some common examples:
+\end{itemize}
+
+
+\lstset{language=R}
+\begin{lstlisting}
+x.df <- data.frame(x=1, y=2)
+is.data.frame(x.df)
+is.vector(x.df)
+is.na(c(1, 2, 3, NA, NA))
+\end{lstlisting}
+
+\begin{verbatim}
+ [1] TRUE
+ [1] FALSE
+ [1] FALSE FALSE FALSE  TRUE  TRUE
 \end{verbatim}
 \end{frame}
 \section{Reproducible research (RR) and workflow}
-\label{sec-6}
+\label{sec-7}
 \subsection{Some basics}
-\label{sec-6-1}
+\label{sec-7-1}
 \begin{frame}
 \frametitle{What is reproducible research?}
-\label{sec-6-1-1}
+\label{sec-7-1-1}
 
 
     \enquote{By reproducible research, we mean research papers with accompanying software tools that allow the
@@ -1074,7 +1118,7 @@ mean(df.fake$y)
 \end{frame}
 \begin{frame}
 \frametitle{Requirements for the workflow: TREMMP}
-\label{sec-6-1-2}
+\label{sec-7-1-2}
 
     \small
 \begin{itemize}
@@ -1091,7 +1135,7 @@ mean(df.fake$y)
 \end{frame}
 \begin{frame}
 \frametitle{The source code is real}
-\label{sec-6-1-3}
+\label{sec-7-1-3}
 
     \enquote{The source code is real. The objects are realizations of the source code. Source for EVERY user
     modified object is placed in a particular directory or directories, for later editing and retrieval}
@@ -1099,7 +1143,7 @@ mean(df.fake$y)
 \end{frame}
 \begin{frame}
 \frametitle{Use \texttt{source()} to read R code from a file}
-\label{sec-6-1-4}
+\label{sec-7-1-4}
 
     The R console can be used for short and temporary tests. In order to
     establish a TREMMP workflow, however, it is required to write R programs and
@@ -1108,28 +1152,28 @@ mean(df.fake$y)
 \end{frame}
 \begin{frame}
 \frametitle{More on reproducible research}
-\label{sec-6-1-5}
+\label{sec-7-1-5}
 
 \begin{itemize}
-\item Kieran Healy: \enquote{Choosing Your Work􀃸ow Applications}  \href{http://www.kieranhealy.org/files/misc/workflow-apps.pdf}{http://www.kieranhealy.org/files/misc/workflow-apps.pdf}
+\item Kieran Healy: \enquote{Choosing Your Workflow Applications}  \href{http://www.kieranhealy.org/files/misc/workflow-apps.pdf}{http://www.kieranhealy.org/files/misc/workflow-apps.pdf}
 \item \ldots{} to be continued \ldots{}
 \end{itemize}
 \end{frame}
 \subsection{\LaTeX in 5 minutes}
-\label{sec-6-2}
+\label{sec-7-2}
 \begin{frame}
 \frametitle{What is \LaTeX}
-\label{sec-6-2-1}
+\label{sec-7-2-1}
 \begin{itemize}
 
 \item \LaTeX{} is a markup language. Another markup language you might know is HTML.
-\label{sec-6-2-1-1}%
+\label{sec-7-2-1-1}%
 
 \item \LaTeX{} provides high-quality typesetting features.
-\label{sec-6-2-1-2}%
+\label{sec-7-2-1-2}%
 
 \item The typical workflow is as follows:
-\label{sec-6-2-1-3}%
+\label{sec-7-2-1-3}%
 \begin{enumerate}
 \item Create \LaTeX{} source code file (\texttt{.tex})
 \item Compile it via \LaTeX{} or pdf\LaTeX
@@ -1137,7 +1181,7 @@ mean(df.fake$y)
 \end{enumerate}
 
 \item In order to run \LaTeX{} on your computer, you will need to install a\\
-\label{sec-6-2-1-4}%
+\label{sec-7-2-1-4}%
 \LaTeX-distribution (e.g., Mik\TeX{} for MS-Windows).  
 
 
@@ -1151,7 +1195,7 @@ mean(df.fake$y)
 \end{frame}
 \begin{frame}[fragile,shrink = 5]
 \frametitle{What a \LaTeX{} file looks like}
-\label{sec-6-2-3}
+\label{sec-7-2-3}
 
 
 \lstset{language=TeX}
@@ -1180,17 +1224,17 @@ Hello world!
 \end{frame}
 \begin{frame}
 \frametitle{The compiled `Hello world'-example}
-\label{sec-6-2-4}
+\label{sec-7-2-4}
 
 
     \frame{\includegraphics[clip, scale = 0.25]{../graph/hello_world.pdf}}
 \end{frame}
 \section{Useful books and websites}
-\label{sec-7}
+\label{sec-8}
 \subsection{}
 \begin{frame}
-\frametitle{Useful books or websites}
-\label{sec-7-1-1}
+\frametitle{Books and websites (in English)}
+\label{sec-8-1-1}
 
 \begin{itemize}
 \item Websites
@@ -1209,6 +1253,18 @@ Hello world!
 \item See also \href{http://www.r-project.org/doc/bib/R-books.html}{Books related to R}
 \item \ldots
 \end{itemize}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Books and websites (in German)}
+\label{sec-8-1-2}
+
+\begin{itemize}
+\item Books
+\begin{itemize}
+\item Wikibooks GNU R: \href{http://de.wikibooks.org/wiki/GNU_R}{http://de.wikibooks.org/wiki/GNU\_R}
+\end{itemize}
+\item Websites
 \end{itemize}
 \end{frame}
 

@@ -37,6 +37,7 @@
 #+latex_header: \usepackage[scaled=0.92]{helvet}
 #+latex_header: \usepackage{cclicenses}
 #+LATEX_HEADER: \usepackage{csquotes}
+#+latex_header: \usepackage{hyperref}
 #+latex_header: \hypersetup{colorlinks=true, urlcolor=cyan, linkcolor=black}
 
 
@@ -482,8 +483,12 @@ mean(x.na, na.rm = TRUE)
 
 *** Overview
     - R can handle many different data formats, e.g. SPSS, Stata, SAS, all sorts of text formats or DBMS.
-    - However, many data formats require you to load a certain package which then provides a function to load the data. 
+    - However, many data formats require you to load a certain package (e.g. =foreign=) which then provides a function to load the data. 
     - Whenever you load a specific dataset, you need to assign it to an object via =<-=.
+    - (\alert{Important!}) Since R is supposed to work on different platforms, do not use the
+      \textbackslash-symbol (backslash) to specify a certain file within a certain
+      folder. Instead, use =/= (slash) (or =\\=). This is okay:
+      =c:/myfolder/script.R= and this is not going to work: =c:\myfolder\script.R=
     - The functions =fix()= and =edit()= open a MS-Excel-like datasheet (under MS-Windows).
 
 
@@ -543,46 +548,41 @@ names(dTeachExp)
     - =head()=: show first =n= cases (default is =n=6=) 
 
 
-*** Accessing elements of a data frame				    :B_frame:
-    :PROPERTIES:
-    :BEAMER_env: frame
-    :BEAMER_envargs: [shrink=5]
-    :END:
+*** Accessing elements of a data frame I
     - Since R can handle many data objects, you first have to refer to a
       particular data object. Second, specify which element(s) you are interested
       in.
     - There is a more general and a more specific method of accessing elements
-      of a data frame: the =[=- and the =$=-operator. 
-
-    #+BEGIN_SRC R
-    dTeachExp[,"T"] # access variable T
-    #+END_SRC
-
-    #+RESULTS:
-    :  [1]  0.03  0.12 -0.14  1.18  0.26 -0.06 -0.02 -0.32  0.27  0.80  0.54  0.18
-    : [13] -0.02  0.23 -0.18 -0.06  0.30  0.07 -0.07
-
-    #+BEGIN_SRC R
-    dTeachExp$T # access variable T, shortcut for dTeachExp[,"T"]
-    #+END_SRC
-
-    #+RESULTS:
-    :  [1]  0.03  0.12 -0.14  1.18  0.26 -0.06 -0.02 -0.32  0.27  0.80  0.54  0.18
-    : [13] -0.02  0.23 -0.18 -0.06  0.30  0.07 -0.07
+      of a data frame: the =[=- and the =$=-operator.
+    - Using the =$=-operator, you only can access /one/ element of the data
+      frame. Using the =[=-operator, though, allows you to access more than one
+      element.
+    - The use of =[=-operator depends on the number of dimensions of the R
+      object. The different dimensions are separated by commas. 
 
 
-    #+BEGIN_SRC R
-    dTeachExp[1:4,c("T", "weeks")] # access first 4 obs of T and weeks
-    #+END_SRC
+*** Accessing elements of a data frame II			    :B_frame:
+    :PROPERTIES:
+    :BEAMER_env: frame
+    :BEAMER_envargs: [shrink=30]
+    :END:
 
-    #+RESULTS:
-    :       T weeks
-    : 1  0.03     2
-    : 2  0.12    21
-    : 3 -0.14    19
-    : 4  1.18     0
+#+BEGIN_SRC R
+dTeachExp[,"T"] # access variable T
+#+END_SRC
 
- 
+#+BEGIN_SRC R
+dTeachExp$T # access variable T, shortcut for dTeachExp[,"T"]
+#+END_SRC
+
+#+BEGIN_SRC R
+dTeachExp[1:4, c("T", "weeks")] # access first 4 obs of T and weeks
+dTeachExp2 <- dTeachExp[1:4, c("T", "weeks")] # new data frame-object
+#+END_SRC
+
+
+
+
 
 *** Saving a dataset
     - =save(object, file = "filename")= saves a particular data (or a list of objects) object to the
@@ -605,9 +605,13 @@ names(dTeachExp)
     - Missing values
 
 
-*** Creating new variables
+*** Creating new variables					    :B_frame:
+    :PROPERTIES:
+    :BEAMER_env: frame
+    :BEAMER_envargs: [shrink=10]
+    :END:
 #+BEGIN_SRC R
-dTeachExp$SE <- sqrt(dTeachExp$V)
+dTeachExp$SE <- sqrt(dTeachExp$V) #or: dTeachExp[, "SE"]
 head(round(dTeachExp, digits = 2))
 #+END_SRC
 
@@ -622,14 +626,14 @@ head(round(dTeachExp, digits = 2))
 
 
 
-*** Removing cases I (subsetting/indexing)			    :B_frame:
+*** Selecting/Removing cases I (subsetting/indexing) 		    :B_frame:
     :PROPERTIES:
    :BEAMER_env: frame
    :BEAMER_envarg: [shrink=10]
    :END:
-    Relational (=<=, =>=, =<==, =>==, ==, !=) and logical operators (=&=, =|=, =!=) can be used to remove certain cases.
+    Relational (=<=, =>=, =<==, =>==, ==, !=) and logical operators (=&=, =|=, =!=) can be used to select/remove certain cases.
 #+BEGIN_SRC R 
-subset(dTeachExp, weekcat == 0)
+subset(dTeachExp, weekcat == 0) #Keep weekcat == 0
 #+END_SRC
 
 #+results:
@@ -650,13 +654,13 @@ subset(dTeachExp, weekcat == 0 & T > 1)
 : 4  4 1.18 0.139129     0       0 0.373
 
 
-*** Removing cases II						    :B_frame:
+*** Selecting/Removing cases II						    :B_frame:
     :PROPERTIES:
    :BEAMER_env: frame
-   :BEAMER_envarg: [shrink=10]
+   :BEAMER_envargs: [shrink=10]
    :END:
-    =subset()= is one way to create subsets. Another possibility is using the
-    =[=-operator. 
+    =subset()= is one way to create subsets. Another (and recommended)
+    possibility is to use the =[=-operator. 
 #+BEGIN_SRC R 
 dTeachExp[dTeachExp$weekcat == 0, ]
 #+END_SRC
@@ -680,10 +684,10 @@ dTeachExp[dTeachExp$weekcat == 0 & dTeachExp$T > 1, ]
 
 
 
-*** Removing (or keeping) cases III				    :B_frame:
+*** Selecting/Removing (or keeping) cases III				    :B_frame:
    :PROPERTIES:
    :BEAMER_env: frame
-   :BEAMER_envargs: [shrink=0]
+   :BEAMER_envargs: [shrink=10]
    :END:
     Say, you want to remove cases based on a list of person IDs. In that case, you can use the =%in%= function.
 #+BEGIN_SRC R
@@ -735,6 +739,8 @@ dTeachExp.missing[!is.na(dTeachExp.missing$T), ][1:6,]
 : 8  8 -0.32 0.048400    24       3 0.220
 : 9  9  0.27 0.026896     0       0 0.164
 
+(For more information on using =is.na()= or similar functions, see slide \pageref{slide_is_function}.)
+
 
 #+BEGIN_SRC R 
 na.omit(dTeachExp.missing)[1:6,]
@@ -748,7 +754,6 @@ na.omit(dTeachExp.missing)[1:6,]
 : 8   8 -0.32 0.048400    24       3 0.220
 : 9   9  0.27 0.026896     0       0 0.164
 : 10 10  0.80 0.063001     1       1 0.251
-
 
 
 *** Removing variables						    :B_frame:
@@ -862,6 +867,31 @@ dTeachExp[1:2,!(dTeachExp.names %in% c("weeks", "weekcat"))]
     #+END_SRC
 
 
+* (Some) Advanced functions of the R language
+
+** 
+*** The =is.*()= functions					    :B_frame:
+    :PROPERTIES:
+    :BEAMER_env: frame
+    :BEAMER_envargs: [label=slide_is_function]
+    :END:
+    - Sometimes, we want to check some properties of an R object, e.g. is a
+      certain object of class "data frame" or does it contain missing values (=NA=s).
+    - R provides a number is =is.*()=-functions which perform these tests and
+      return a logical object (with values =TRUE= or =FALSE=).
+    - Some common examples:
+
+#+BEGIN_SRC R
+x.df <- data.frame(x=1, y=2)
+is.data.frame(x.df)
+is.vector(x.df)
+is.na(c(1, 2, 3, NA, NA))
+#+END_SRC
+
+#+RESULTS:
+: [1] TRUE
+: [1] FALSE
+: [1] FALSE FALSE FALSE  TRUE  TRUE
 
 * Reproducible research (RR) and workflow
 
@@ -901,7 +931,7 @@ dTeachExp[1:2,!(dTeachExp.names %in% c("weeks", "weekcat"))]
 
 
 *** More on reproducible research
-    - Kieran Healy: "Choosing Your Work􀃸ow Applications"  http://www.kieranhealy.org/files/misc/workflow-apps.pdf
+    - Kieran Healy: "Choosing Your Workflow Applications"  http://www.kieranhealy.org/files/misc/workflow-apps.pdf
     - ... to be continued ...
 
 ** \LaTeX in 5 minutes
@@ -1001,11 +1031,12 @@ dTeachExp[1:2,!(dTeachExp.names %in% c("weeks", "weekcat"))]
       - [[http://staff.pubhealth.ku.dk/~pd/ISwR.html][Introductory Statistics with R]] by P Dalgaard
       - See also [[http://www.r-project.org/doc/bib/R-books.html][Books related to R]]
       - \ldots
+
 *** Books and websites (in German)
     - Books
       - Wikibooks GNU R: http://de.wikibooks.org/wiki/GNU_R
     - Websites
-      - [[http://gauss.metpsy.uni-jena.de/metheval/wiki-metheval-hp/index.php/R_Einf%25C3%25BChrung][R Einführung von Metheval]] 
+
 
 
 * Footnotes
