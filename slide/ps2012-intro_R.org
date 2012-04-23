@@ -105,9 +105,9 @@ xleftmargin=.23in
 #%% http://www.cs.unm.edu/~eschulte/
 
 
-* Introduction
+* Introduction and 5 basic R concepts
 
-** Preamble 
+** 
 
 #+begin_latex
 \begin{frame}\frametitle{Acknowledgment, license and downloads}
@@ -130,8 +130,7 @@ helpful in answering my questions or fixing bugs.
     - Introduce /some/ basic concepts of R
     - Show some common steps in data preparation and data analysis (esp. meta-analysis)
     - Introduce my (R) data analysis workflow philosophy
-    - Present some showcases which cover advanced usage of R
-
+    - ...
 
 *** What is R?
 \enquote{R is a language and environment for statistical computing and graphics. [...] Many users think of R
@@ -167,9 +166,6 @@ sites covering a very wide range of modern statistics} (http://www.r-project.org
     \includegraphics[scale = 0.3]{../graph/f_screenshot}
     \end{center}
 
-
-
-** Five basic R concepts
 
 *** Five basic R concepts you need to know
     1. Objects  
@@ -291,7 +287,6 @@ oTtest$p.value
 *** Packages							    :B_frame:
     :PROPERTIES:
     :BEAMER_env: frame
-    :BEAMER_envargs: [shrink=5]
     :END:
     - Most R functions are stored in packages.
     - When you download R, it only comes with a very limited set of functions
@@ -302,6 +297,7 @@ oTtest$p.value
     - Whenever a new R session is started, the packages have to be loaded via
       =library(...)=. 
 #+begin_LaTeX
+\vfill
 \infobox{
 \href{http://cran.r-project.org/doc/manuals/R-intro.html\#Packages}{AItR on packages}\\
 \href{http://www.statmethods.net/interface/packages.html}{Quick-R on packages}\\

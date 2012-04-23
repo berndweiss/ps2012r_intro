@@ -1,4 +1,4 @@
-% Created 2012-04-22 So 17:30
+% Created 2012-04-23 Mo 10:15
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -108,10 +108,9 @@ xleftmargin=.23in
 
 
 
-\section{Introduction}
+\section{Introduction and 5 basic R concepts}
 \label{sec-1}
-\subsection{Preamble}
-\label{sec-1-1}
+\subsection{}
 
 
 \begin{frame}\frametitle{Acknowledgment, license and downloads}
@@ -136,7 +135,7 @@ helpful in answering my questions or fixing bugs.
 \item Introduce \emph{some} basic concepts of R
 \item Show some common steps in data preparation and data analysis (esp. meta-analysis)
 \item Introduce my (R) data analysis workflow philosophy
-\item Present some showcases which cover advanced usage of R
+\item \ldots{}
 \end{itemize}
 \end{frame}
 \begin{frame}
@@ -182,11 +181,9 @@ sites covering a very wide range of modern statistics} (\href{http://www.r-proje
     \includegraphics[scale = 0.3]{../graph/f_screenshot}
     \end{center}
 \end{frame}
-\subsection{Five basic R concepts}
-\label{sec-1-2}
 \begin{frame}
 \frametitle{Five basic R concepts you need to know}
-\label{sec-1-2-1}
+\label{sec-1-1-6}
 
 \begin{enumerate}
 \item Objects
@@ -198,7 +195,7 @@ sites covering a very wide range of modern statistics} (\href{http://www.r-proje
 \end{frame}
 \begin{frame}
 \frametitle{It's all about objects}
-\label{sec-1-2-2}
+\label{sec-1-1-7}
 
 \begin{itemize}
 \item (Nearly) Everything in R is an object (some similarities to Stata's
@@ -215,7 +212,7 @@ sites covering a very wide range of modern statistics} (\href{http://www.r-proje
 \end{frame}
 \begin{frame}[fragile]
 \frametitle{A first example of an R object}
-\label{sec-1-2-3}
+\label{sec-1-1-8}
 
 \begin{itemize}
 \item \enquote{\texttt{<-}} means \enquote{assign}
@@ -259,7 +256,7 @@ x * 100
 \end{frame}
 \begin{frame}[fragile]
 \frametitle{A second example of an R object}
-\label{sec-1-2-4}
+\label{sec-1-1-9}
 
 
     We also can create vectors ($1\times4$) or matrices ($2\times3$):
@@ -291,7 +288,7 @@ x.matrix
 \end{frame}
 \begin{frame}[fragile,shrink = 20]
 \frametitle{A third example of an R object}
-\label{sec-1-2-5}
+\label{sec-1-1-10}
 
     Conduct a t-test and save results in object \texttt{oTtest}.
 
@@ -309,13 +306,13 @@ oTtest
         Welch Two Sample t-test
 
 data:  rnorm(100) by sample(0:1, 100, replace = TRUE) 
-t = -1.2827, df = 98, p-value = 0.2026
+t = -1.6595, df = 91.831, p-value = 0.1004
 alternative hypothesis: true difference in means is not equal to 0 
 95 percent confidence interval:
- -0.6228781  0.1337866 
+ -0.70460577  0.06313923 
 sample estimates:
 mean in group 0 mean in group 1 
-    -0.19150859      0.05303713
+    -0.02551101      0.29522225
 \end{verbatim}
 
 
@@ -329,7 +326,7 @@ oTtest$statistic
 
 \begin{verbatim}
          t 
- -1.282716
+ -1.659456
 \end{verbatim}
 
 \ldots or the p-value.
@@ -341,12 +338,12 @@ oTtest$p.value
 \end{lstlisting}
 
 \begin{verbatim}
- [1] 0.2026171
+ [1] 0.1004354
 \end{verbatim}
 \end{frame}
-\begin{frame}[shrink=5]
+\begin{frame}
 \frametitle{Packages}
-\label{sec-1-2-6}
+\label{sec-1-1-11}
 
 \begin{itemize}
 \item Most R functions are stored in packages.
@@ -358,6 +355,7 @@ oTtest$p.value
 \item Whenever a new R session is started, the packages have to be loaded via
       \texttt{library(...)}.
 \end{itemize}
+\vfill
 \infobox{
 \href{http://cran.r-project.org/doc/manuals/R-intro.html\#Packages}{AItR on packages}\\
 \href{http://www.statmethods.net/interface/packages.html}{Quick-R on packages}\\
@@ -366,7 +364,7 @@ oTtest$p.value
 \end{frame}
 \begin{frame}
 \frametitle{The basic syntax of an R function}
-\label{sec-1-2-7}
+\label{sec-1-1-12}
 
 \begin{itemize}
 \item The general syntax is: \texttt{functionname(arglist)}
@@ -384,7 +382,7 @@ oTtest$p.value
 \end{frame}
 \begin{frame}
 \frametitle{Important data types/data structures}
-\label{sec-1-2-8}
+\label{sec-1-1-13}
 
 \begin{itemize}
 \item When you are used to SPSS or Stata, you never (rarely) had to deal with
@@ -401,7 +399,7 @@ oTtest$p.value
 \end{frame}
 \begin{frame}[fragile,shrink = 15]
 \frametitle{Important data types/data structures (cont'd)}
-\label{sec-1-2-9}
+\label{sec-1-1-14}
 
 \begin{itemize}
 \item Scalar
@@ -452,7 +450,7 @@ x.factor
 \end{frame}
 \begin{frame}[fragile,shrink = 15]
 \frametitle{Important data types/data structures (cont'd)}
-\label{sec-1-2-10}
+\label{sec-1-1-15}
 
 \begin{itemize}
 \item Data frame (each column can have a different data type)
@@ -496,7 +494,7 @@ x.list
 \end{frame}
 \begin{frame}[fragile]
 \frametitle{Missing data}
-\label{sec-1-2-11}
+\label{sec-1-1-16}
 
 \begin{itemize}
 \item The symbol \texttt{NA} (Not Available) represents missing values.
@@ -1018,11 +1016,11 @@ df.fake[1:4, ] # show rows 1 to 4
 \end{lstlisting}
 
 \begin{verbatim}
-                    x         y sex
-     1  1.1140798  3.054988   f
-     2 -0.1229896 25.024182   m
-     3 -0.7102524 -1.137744   f
-     4  0.1216345 16.244204   m
+                   x          y sex
+     1 1.8652696 16.1644829   f
+     2 0.1415444  8.8382284   m
+     3 1.1423205  7.7200622   f
+     4 0.4350909  0.7427628   m
 \end{verbatim}
 \end{frame}
 \subsection{Mean, median \& Co}
@@ -1038,13 +1036,13 @@ summary(df.fake)
 \end{lstlisting}
 
 \begin{verbatim}
-                x                    y          sex  
-      Min.   :-1.0544641   Min.   :-1.138   f:5  
-      1st Qu.:-0.7403016   1st Qu.: 3.093   m:5  
-      Median :-0.0006776   Median :13.987        
-      Mean   : 0.1248365   Mean   :11.567        
-      3rd Qu.: 0.7936868   3rd Qu.:16.438        
-      Max.   : 1.9422180   Max.   :25.024
+                x                 y           sex  
+      Min.   :-0.7848   Min.   : 0.7428   f:5  
+      1st Qu.:-0.1647   1st Qu.: 3.9262   m:5  
+      Median : 0.1345   Median : 7.6184        
+      Mean   : 0.2630   Mean   : 7.2026        
+      3rd Qu.: 0.4697   3rd Qu.: 9.1269        
+      Max.   : 1.8653   Max.   :16.1645
 \end{verbatim}
 
 
@@ -1054,8 +1052,8 @@ summary(df.fake$x)
 \end{lstlisting}
 
 \begin{verbatim}
-               Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
-     -1.0540000 -0.7403000 -0.0006776  0.1248000  0.7937000  1.9420000
+            Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+     -0.7848 -0.1647  0.1345  0.2630  0.4697  1.8650
 \end{verbatim}
 \end{frame}
 \begin{frame}[fragile]
@@ -1070,8 +1068,8 @@ mean(df.fake$y)
 \end{lstlisting}
 
 \begin{verbatim}
-         [1] 0.1248365
-     [1] 11.56673
+         [1] 0.2630431
+     [1] 7.202629
 \end{verbatim}
 \end{frame}
 \section{(Some) Advanced functions of the R language}
