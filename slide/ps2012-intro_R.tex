@@ -1,4 +1,4 @@
-% Created 2012-04-24 Di 16:04
+% Created 2012-04-24 Di 16:06
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -306,14 +306,14 @@ oTtest
         Welch Two Sample t-test
 
 data:  rnorm(100) by sample(0:1, 100, replace = TRUE) 
-t = 1.3173, df = 96.774, p-value =
-0.1909
+t = -0.3616, df = 94.733, p-value =
+0.7184
 alternative hypothesis: true difference in means is not equal to 0 
 95 percent confidence interval:
- -0.1305236  0.6456841 
+ -0.4470489  0.3092809 
 sample estimates:
 mean in group 0 mean in group 1 
-     0.02435994     -0.23322032
+    -0.10122270     -0.03233873
 \end{verbatim}
 
 
@@ -326,8 +326,8 @@ oTtest$statistic
 \end{lstlisting}
 
 \begin{verbatim}
-        t 
- 1.317278
+          t 
+ -0.3616331
 \end{verbatim}
 
 \ldots or the p-value.
@@ -339,7 +339,7 @@ oTtest$p.value
 \end{lstlisting}
 
 \begin{verbatim}
- [1] 0.190856
+ [1] 0.7184316
 \end{verbatim}
 \end{frame}
 \begin{frame}
@@ -1108,12 +1108,10 @@ cut(dTE.miss2$weeks,
  5 Levels: [0,5] (5,10] ... (20,25]
 \end{verbatim}
 \end{frame}
-\begin{frame}[fragile]
+\begin{frame}[fragile,shrink = 5 ]
 \frametitle{Recoding variables IV}
 \label{sec-4-1-12}
 
-    :BEAMER$_{\mathrm{envargs}}$: [shrink = 5 ]
-    
 
 
     Finally, there are several packages which offer \enquote{typical} recode- or
@@ -1171,11 +1169,11 @@ df.fake[1:4, ] # show rows 1 to 4
 \end{lstlisting}
 
 \begin{verbatim}
-                     x         y sex
-     1 -0.24469828 15.949615   f
-     2 -1.01184185  4.250786   m
-     3 -0.65802345 10.657806   f
-     4  0.05696325 12.178305   m
+                    x         y sex
+     1 -0.9527188 13.874167   f
+     2 -0.8485128  8.439426   m
+     3  0.2242950  4.076172   f
+     4  2.3423277  7.002842   m
 \end{verbatim}
 \end{frame}
 \subsection{Mean, median \& Co}
@@ -1192,13 +1190,13 @@ summary(df.fake)
 
     
 \begin{verbatim}
-      x                 y         
-Min.   :-1.4420   Min.   : 4.251  
-1st Qu.:-0.9465   1st Qu.: 8.912  
-Median :-0.4514   Median :11.908  
-Mean   :-0.3476   Mean   :12.545  
-3rd Qu.: 0.4668   3rd Qu.:15.980  
-Max.   : 0.6562   Max.   :21.870  
+      x                  y         
+Min.   :-2.03306   Min.   : 4.076  
+1st Qu.:-0.92667   1st Qu.: 7.362  
+Median : 0.19037   Median : 8.812  
+Mean   :-0.01863   Mean   : 9.287  
+3rd Qu.: 0.73509   3rd Qu.:12.131  
+Max.   : 2.34233   Max.   :14.280  
 sex  
 f:5  
 m:5
@@ -1211,10 +1209,10 @@ summary(df.fake$x)
 \end{lstlisting}
 
 \begin{verbatim}
-            Min. 1st Qu.  Median    Mean 3rd Qu. 
-     -1.4420 -0.9465 -0.4514 -0.3476  0.4668 
-        Max. 
-      0.6562
+             Min.  1st Qu.   Median     Mean 
+     -2.03300 -0.92670  0.19040 -0.01863 
+      3rd Qu.     Max. 
+      0.73510  2.34200
 \end{verbatim}
 \end{frame}
 \begin{frame}[fragile]
@@ -1229,8 +1227,8 @@ mean(df.fake$y)
 \end{lstlisting}
 
 \begin{verbatim}
-         [1] -0.3476027
-     [1] 12.54537
+         [1] -0.01863347
+     [1] 9.286563
 \end{verbatim}
 \end{frame}
 \section{(Some) Advanced functions of the R language}

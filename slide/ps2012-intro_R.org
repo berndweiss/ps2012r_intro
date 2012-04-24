@@ -945,9 +945,8 @@ cut(dTE.miss2$weeks,
 *** Recoding variables IV					    :B_frame:
     :PROPERTIES:
     :BEAMER_env: frame
-    :BEAMER_envargs: [shrink = 5]
-    :END:
-    
+    :BEAMER_envargs: [shrink = 5 ]
+    :END:    
 #+BEGIN_SRC R :results silent :exports none
 old.options <- options()
 options(width = 40)
