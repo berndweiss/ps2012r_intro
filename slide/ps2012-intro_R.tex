@@ -1,4 +1,4 @@
-% Created 2012-04-24 Di 16:06
+% Created 2012-04-24 Di 16:37
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -306,14 +306,14 @@ oTtest
         Welch Two Sample t-test
 
 data:  rnorm(100) by sample(0:1, 100, replace = TRUE) 
-t = -0.3616, df = 94.733, p-value =
-0.7184
+t = -0.9478, df = 95.447, p-value =
+0.3456
 alternative hypothesis: true difference in means is not equal to 0 
 95 percent confidence interval:
- -0.4470489  0.3092809 
+ -0.6846104  0.2421263 
 sample estimates:
 mean in group 0 mean in group 1 
-    -0.10122270     -0.03233873
+     0.01101695      0.23225900
 \end{verbatim}
 
 
@@ -327,7 +327,7 @@ oTtest$statistic
 
 \begin{verbatim}
           t 
- -0.3616331
+ -0.9478301
 \end{verbatim}
 
 \ldots or the p-value.
@@ -339,7 +339,7 @@ oTtest$p.value
 \end{lstlisting}
 
 \begin{verbatim}
- [1] 0.7184316
+ [1] 0.3456096
 \end{verbatim}
 \end{frame}
 \begin{frame}
@@ -1170,10 +1170,10 @@ df.fake[1:4, ] # show rows 1 to 4
 
 \begin{verbatim}
                     x         y sex
-     1 -0.9527188 13.874167   f
-     2 -0.8485128  8.439426   m
-     3  0.2242950  4.076172   f
-     4  2.3423277  7.002842   m
+     1  0.1496682 10.215440   f
+     2 -0.1611632  7.611655   m
+     3  0.3597894 17.000173   f
+     4 -0.5229868 13.750855   m
 \end{verbatim}
 \end{frame}
 \subsection{Mean, median \& Co}
@@ -1190,13 +1190,13 @@ summary(df.fake)
 
     
 \begin{verbatim}
-      x                  y         
-Min.   :-2.03306   Min.   : 4.076  
-1st Qu.:-0.92667   1st Qu.: 7.362  
-Median : 0.19037   Median : 8.812  
-Mean   :-0.01863   Mean   : 9.287  
-3rd Qu.: 0.73509   3rd Qu.:12.131  
-Max.   : 2.34233   Max.   :14.280  
+      x                   y         
+Min.   :-2.255828   Min.   : 5.717  
+1st Qu.:-0.458798   1st Qu.: 6.995  
+Median :-0.005748   Median : 9.949  
+Mean   : 0.014763   Mean   :10.802  
+3rd Qu.: 0.553714   3rd Qu.:14.831  
+Max.   : 2.374489   Max.   :17.000  
 sex  
 f:5  
 m:5
@@ -1209,10 +1209,10 @@ summary(df.fake$x)
 \end{lstlisting}
 
 \begin{verbatim}
-             Min.  1st Qu.   Median     Mean 
-     -2.03300 -0.92670  0.19040 -0.01863 
-      3rd Qu.     Max. 
-      0.73510  2.34200
+              Min.   1st Qu.    Median      Mean 
+     -2.256000 -0.458800 -0.005748  0.014760 
+       3rd Qu.      Max. 
+      0.553700  2.374000
 \end{verbatim}
 \end{frame}
 \begin{frame}[fragile]
@@ -1227,8 +1227,8 @@ mean(df.fake$y)
 \end{lstlisting}
 
 \begin{verbatim}
-         [1] -0.01863347
-     [1] 9.286563
+         [1] 0.01476327
+     [1] 10.80246
 \end{verbatim}
 \end{frame}
 \section{(Some) Advanced functions of the R language}
