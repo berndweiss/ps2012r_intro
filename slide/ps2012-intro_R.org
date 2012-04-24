@@ -651,6 +651,9 @@ dTeachExp2 <- dTeachExp[1:4, c("T", "weeks")] # new data frame-object
     - Generate new variables
     - Select cases (subsetting/indexing) and variables
     - Missing values
+    - Recoding
+
+
 
 
 *** Creating new variables					    :B_frame:
@@ -854,6 +857,134 @@ dTeachExp[1:2,!(dTeachExp.names %in% c("weeks", "weekcat"))]
 #+begin_LaTeX
 \infobox{\href{http://www.statmethods.net/management/subset.html}{Quick-R on Excluding (DROPPING) Variables}}
 #+end_LaTeX
+
+
+*** Recoding variables I					    :B_frame:
+    :PROPERTIES:
+    :BEAMER_env: frame
+    :BEAMER_envargs: [shrink = 5]
+    :END:
+    - There are several methods and functions available to recode variables.
+    - Using only R's base functions, recoding means to override values of a
+      variable (or create a new variable) by new values based on a given condition.
+    - For example, replace all missing values (NA) in T with -99. Note that
+      testing for equality does not work. Instead, use the =is.na()= 
+      function: 
+
+#+BEGIN_SRC R
+dTE.miss2 <- dTeachExp.missing # copy data object
+dTE.miss2$T[is.na(dTE.miss2$T)] <- 99 # replace values
+head(dTE.miss2, n = 3) # print out first 3 cases
+#+END_SRC
+
+#+RESULTS:
+:   ID     T        V weeks weekcat    SE
+: 1  1 99.00 0.015625     2       2 0.125
+: 2  2  0.12 0.021609    21      NA 0.147
+: 3  3 99.00 0.027889    19      NA 0.167
+
+#+begin_LaTeX
+\infobox{\href{http://www.statmethods.net/management/variables.html}{Quick-R on Recoding variables}}
+#+end_LaTeX
+
+
+
+*** Recoding variables II 					    :B_frame:
+    :PROPERTIES:
+    :BEAMER_env: frame
+    :BEAMER_envargs: [shrink = 5]
+    :END:
+    - Another way to go is to use the function =ifelse=.
+    - The syntax is quite simple: =ifelse(test, yes, no)=
+    - =ifelse=-statements can be nested, i.e. =ifelse(test, yes, ifelse(test,
+      yes, no))=
+
+#+BEGIN_SRC R
+dTE.miss2$T <- ifelse(dTE.miss2$T == 99, NA, 
+                      dTE.miss2$T)
+head(dTE.miss2, n = 4)
+#+END_SRC
+
+#+RESULTS:
+:   ID    T        V weeks weekcat    SE
+: 1  1   NA 0.015625     2       2 0.125
+: 2  2 0.12 0.021609    21      NA 0.147
+: 3  3   NA 0.027889    19      NA 0.167
+: 4  4 1.18 0.139129     0       0 0.373
+
+
+
+*** Recoding variables III 					    :B_frame:
+    
+#+BEGIN_SRC R :results silent :exports none
+old.options <- options()
+options(width = 40)
+#+END_SRC
+
+#+RESULTS:
+
+    A third approach using =cut()= is handy when it comes to grouping a continuous variable,
+    e.g. age. 
+
+#+BEGIN_SRC R
+dTE.miss2$weeks
+#+END_SRC
+
+#+RESULTS:
+:  [1]  2 21 19  0  0  3 17 24  0  1  0  0
+: [13]  1  2 17  5  1  2  7
+
+#+BEGIN_SRC R
+cut(dTE.miss2$weeks, 
+    breaks = c(0, 5, 10, 15, 20, 25), 
+    include.lowest = TRUE)
+#+END_SRC
+
+
+
+*** Recoding variables IV					    :B_frame:
+    :PROPERTIES:
+    :BEAMER_env: frame
+    :BEAMER_envargs: [shrink = 5]
+    :END:
+    
+#+BEGIN_SRC R :results silent :exports none
+old.options <- options()
+options(width = 40)
+#+END_SRC
+
+    Finally, there are several packages which offer "typical" recode- or
+    replace-functions. Here, I will introduce the =recode()= function from the
+    =car= package. 
+
+#+BEGIN_SRC R
+library(car)
+dTE.miss2$weeks
+#+END_SRC
+
+#+RESULTS:
+: Loading required package: MASS
+: Loading required package: nnet
+:  [1]  2 21 19  0  0  3 17 24  0  1  0  0
+: [13]  1  2 17  5  1  2  7
+
+#+BEGIN_SRC R
+recode(dTE.miss2$weeks, "0:5 = 'niedrig'; 
+                         6:10 = 'bloed'; 
+                         11:15 = 'was?';
+                         else = 'rest'")
+#+END_SRC
+
+#+RESULTS:
+:  [1] "niedrig" "rest"    "rest"   
+:  [4] "niedrig" "niedrig" "niedrig"
+:  [7] "rest"    "rest"    "niedrig"
+: [10] "niedrig" "niedrig" "niedrig"
+: [13] "niedrig" "niedrig" "rest"   
+: [16] "niedrig" "niedrig" "niedrig"
+: [19] "bloed"
+
+
 
 
 
@@ -1093,4 +1224,5 @@ is.na(c(1, 2, 3, NA, NA))
 
 * Footnotes
 [fn:1] Works in most but not all cases.
+
 

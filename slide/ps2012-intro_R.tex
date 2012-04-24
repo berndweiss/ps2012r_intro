@@ -1,4 +1,4 @@
-% Created 2012-04-24 Di 10:53
+% Created 2012-04-24 Di 16:04
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -306,13 +306,14 @@ oTtest
         Welch Two Sample t-test
 
 data:  rnorm(100) by sample(0:1, 100, replace = TRUE) 
-t = 1.4018, df = 92.409, p-value = 0.1643
+t = 1.3173, df = 96.774, p-value =
+0.1909
 alternative hypothesis: true difference in means is not equal to 0 
 95 percent confidence interval:
- -0.1022537  0.5930060 
+ -0.1305236  0.6456841 
 sample estimates:
 mean in group 0 mean in group 1 
-     0.08125403     -0.16412214
+     0.02435994     -0.23322032
 \end{verbatim}
 
 
@@ -326,7 +327,7 @@ oTtest$statistic
 
 \begin{verbatim}
         t 
- 1.401806
+ 1.317278
 \end{verbatim}
 
 \ldots or the p-value.
@@ -338,7 +339,7 @@ oTtest$p.value
 \end{lstlisting}
 
 \begin{verbatim}
- [1] 0.1643233
+ [1] 0.190856
 \end{verbatim}
 \end{frame}
 \begin{frame}
@@ -644,7 +645,8 @@ names(dTeachExp)
 \end{lstlisting}
 
 \begin{verbatim}
-         [1] "ID"      "T"       "V"       "weeks"   "weekcat"
+         [1] "ID"      "T"       "V"      
+     [4] "weeks"   "weekcat"
 \end{verbatim}
 \end{frame}
 \begin{frame}
@@ -717,8 +719,10 @@ dTeachExp[,"T"] # access variable T
 \end{lstlisting}
 
 \begin{verbatim}
-  [1]  0.03  0.12 -0.14  1.18  0.26 -0.06 -0.02 -0.32  0.27  0.80  0.54  0.18
- [13] -0.02  0.23 -0.18 -0.06  0.30  0.07 -0.07
+  [1]  0.03  0.12 -0.14  1.18  0.26 -0.06
+  [7] -0.02 -0.32  0.27  0.80  0.54  0.18
+ [13] -0.02  0.23 -0.18 -0.06  0.30  0.07
+ [19] -0.07
 \end{verbatim}
 
 
@@ -728,8 +732,10 @@ dTeachExp$T # access variable T, shortcut for dTeachExp[,"T"]
 \end{lstlisting}
 
 \begin{verbatim}
-  [1]  0.03  0.12 -0.14  1.18  0.26 -0.06 -0.02 -0.32  0.27  0.80  0.54  0.18
- [13] -0.02  0.23 -0.18 -0.06  0.30  0.07 -0.07
+  [1]  0.03  0.12 -0.14  1.18  0.26 -0.06
+  [7] -0.02 -0.32  0.27  0.80  0.54  0.18
+ [13] -0.02  0.23 -0.18 -0.06  0.30  0.07
+ [19] -0.07
 \end{verbatim}
 
 
@@ -771,6 +777,7 @@ dTeachExp2 <- dTeachExp[1:4, c("T", "weeks")] # new data frame-object
 \item Generate new variables
 \item Select cases (subsetting/indexing) and variables
 \item Missing values
+\item Recoding
 \end{itemize}
 \end{frame}
 \begin{frame}[fragile,shrink=10]
@@ -936,14 +943,22 @@ dTeachExp.missing[!is.na(dTeachExp.missing$T), ][1:6,]
 na.omit(dTeachExp.missing)[1:6,]
 \end{lstlisting}
 
+
 \begin{verbatim}
-    ID     T        V weeks weekcat    SE
- 4   4  1.18 0.139129     0       0 0.373
- 5   5  0.26 0.136161     0       0 0.369
- 7   7 -0.02 0.010609    17       3 0.103
- 8   8 -0.32 0.048400    24       3 0.220
- 9   9  0.27 0.026896     0       0 0.164
- 10 10  0.80 0.063001     1       1 0.251
+   ID     T        V weeks weekcat
+4   4  1.18 0.139129     0       0
+5   5  0.26 0.136161     0       0
+7   7 -0.02 0.010609    17       3
+8   8 -0.32 0.048400    24       3
+9   9  0.27 0.026896     0       0
+10 10  0.80 0.063001     1       1
+      SE
+4  0.373
+5  0.369
+7  0.103
+8  0.220
+9  0.164
+10 0.251
 \end{verbatim}
 \end{frame}
 \begin{frame}[fragile,shrink = 15]
@@ -957,7 +972,8 @@ na.omit(dTeachExp.missing)[1:6,]
 \end{lstlisting}
 
 \begin{verbatim}
- [1] "ID"      "T"       "V"       "weeks"   "weekcat" "SE"
+ [1] "ID"      "T"       "V"      
+ [4] "weeks"   "weekcat" "SE"
 \end{verbatim}
 
     Remove the 1. and 3. variable
@@ -998,6 +1014,143 @@ dTeachExp[1:2,!(dTeachExp.names %in% c("weeks", "weekcat"))]
 
 \infobox{\href{http://www.statmethods.net/management/subset.html}{Quick-R on Excluding (DROPPING) Variables}}
 \end{frame}
+\begin{frame}[fragile,shrink = 5]
+\frametitle{Recoding variables I}
+\label{sec-4-1-9}
+
+\begin{itemize}
+\item There are several methods and functions available to recode variables.
+\item Using only R's base functions, recoding means to override values of a
+      variable (or create a new variable) by new values based on a given condition.
+\item For example, replace all missing values (NA) in T with -99. Note that
+      testing for equality does not work. Instead, use the \texttt{is.na()} 
+      function:
+\end{itemize}
+
+
+\lstset{language=R}
+\begin{lstlisting}
+dTE.miss2 <- dTeachExp.missing # copy data object
+dTE.miss2$T[is.na(dTE.miss2$T)] <- 99 # replace values
+head(dTE.miss2, n = 3) # print out first 3 cases
+\end{lstlisting}
+
+\begin{verbatim}
+   ID     T        V weeks weekcat    SE
+ 1  1 99.00 0.015625     2       2 0.125
+ 2  2  0.12 0.021609    21      NA 0.147
+ 3  3 99.00 0.027889    19      NA 0.167
+\end{verbatim}
+
+\infobox{\href{http://www.statmethods.net/management/variables.html}{Quick-R on Recoding variables}}
+\end{frame}
+\begin{frame}[fragile,shrink = 5]
+\frametitle{Recoding variables II}
+\label{sec-4-1-10}
+
+\begin{itemize}
+\item Another way to go is to use the function \texttt{ifelse}.
+\item The syntax is quite simple: \texttt{ifelse(test, yes, no)}
+\item \texttt{ifelse}-statements can be nested, i.e. \texttt{ifelse(test, yes, ifelse(test,       yes, no))}
+\end{itemize}
+
+
+\lstset{language=R}
+\begin{lstlisting}
+dTE.miss2$T <- ifelse(dTE.miss2$T == 99, NA, 
+                      dTE.miss2$T)
+head(dTE.miss2, n = 4)
+\end{lstlisting}
+
+\begin{verbatim}
+   ID    T        V weeks weekcat    SE
+ 1  1   NA 0.015625     2       2 0.125
+ 2  2 0.12 0.021609    21      NA 0.147
+ 3  3   NA 0.027889    19      NA 0.167
+ 4  4 1.18 0.139129     0       0 0.373
+\end{verbatim}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{Recoding variables III}
+\label{sec-4-1-11}
+
+    
+
+
+    A third approach using \texttt{cut()} is handy when it comes to grouping a continuous variable,
+    e.g. age. 
+
+
+\lstset{language=R}
+\begin{lstlisting}
+dTE.miss2$weeks
+\end{lstlisting}
+
+\begin{verbatim}
+  [1]  2 21 19  0  0  3 17 24  0  1  0  0
+ [13]  1  2 17  5  1  2  7
+\end{verbatim}
+
+
+\lstset{language=R}
+\begin{lstlisting}
+cut(dTE.miss2$weeks, 
+    breaks = c(0, 5, 10, 15, 20, 25), 
+    include.lowest = TRUE)
+\end{lstlisting}
+
+\begin{verbatim}
+  [1] [0,5]   (20,25] (15,20] [0,5]  
+  [5] [0,5]   [0,5]   (15,20] (20,25]
+  [9] [0,5]   [0,5]   [0,5]   [0,5]  
+ [13] [0,5]   [0,5]   (15,20] [0,5]  
+ [17] [0,5]   [0,5]   (5,10] 
+ 5 Levels: [0,5] (5,10] ... (20,25]
+\end{verbatim}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{Recoding variables IV}
+\label{sec-4-1-12}
+
+    :BEAMER$_{\mathrm{envargs}}$: [shrink = 5 ]
+    
+
+
+    Finally, there are several packages which offer \enquote{typical} recode- or
+    replace-functions. Here, I will introduce the \texttt{recode()} function from the
+    \texttt{car} package. 
+
+
+\lstset{language=R}
+\begin{lstlisting}
+library(car)
+dTE.miss2$weeks
+\end{lstlisting}
+
+\begin{verbatim}
+  [1]  2 21 19  0  0  3 17 24  0  1  0  0
+ [13]  1  2 17  5  1  2  7
+\end{verbatim}
+
+
+\lstset{language=R}
+\begin{lstlisting}
+recode(dTE.miss2$weeks, "0:5 = 'niedrig'; 
+                         6:10 = 'bloed'; 
+                         11:15 = 'was?';
+                         else = 'rest'")
+\end{lstlisting}
+
+\begin{verbatim}
+  [1] "niedrig" "rest"    "rest"   
+  [4] "niedrig" "niedrig" "niedrig"
+  [7] "rest"    "rest"    "niedrig"
+ [10] "niedrig" "niedrig" "niedrig"
+ [13] "niedrig" "niedrig" "rest"   
+ [16] "niedrig" "niedrig" "niedrig"
+ [19] "bloed"
+\end{verbatim}
+\end{frame}
 \section{Descriptive statistics}
 \label{sec-5}
 \subsection{}
@@ -1018,11 +1171,11 @@ df.fake[1:4, ] # show rows 1 to 4
 \end{lstlisting}
 
 \begin{verbatim}
-                    x         y sex
-     1 -0.3409091 19.949138   f
-     2 -0.1316638 11.382895   m
-     3 -0.2772535 16.608719   f
-     4 -1.2859231  7.594134   m
+                     x         y sex
+     1 -0.24469828 15.949615   f
+     2 -1.01184185  4.250786   m
+     3 -0.65802345 10.657806   f
+     4  0.05696325 12.178305   m
 \end{verbatim}
 \end{frame}
 \subsection{Mean, median \& Co}
@@ -1037,14 +1190,18 @@ df.fake[1:4, ] # show rows 1 to 4
 summary(df.fake)
 \end{lstlisting}
 
+    
 \begin{verbatim}
-                x                  y          sex  
-      Min.   :-1.28592   Min.   : 3.272   f:5  
-      1st Qu.:-0.25101   1st Qu.: 7.925   m:5  
-      Median :-0.08269   Median :11.047        
-      Mean   :-0.06424   Mean   :11.336        
-      3rd Qu.: 0.19868   3rd Qu.:15.108        
-      Max.   : 0.69569   Max.   :19.949
+      x                 y         
+Min.   :-1.4420   Min.   : 4.251  
+1st Qu.:-0.9465   1st Qu.: 8.912  
+Median :-0.4514   Median :11.908  
+Mean   :-0.3476   Mean   :12.545  
+3rd Qu.: 0.4668   3rd Qu.:15.980  
+Max.   : 0.6562   Max.   :21.870  
+sex  
+f:5  
+m:5
 \end{verbatim}
 
 
@@ -1054,8 +1211,10 @@ summary(df.fake$x)
 \end{lstlisting}
 
 \begin{verbatim}
-             Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-     -1.28600 -0.25100 -0.08269 -0.06424  0.19870  0.69570
+            Min. 1st Qu.  Median    Mean 3rd Qu. 
+     -1.4420 -0.9465 -0.4514 -0.3476  0.4668 
+        Max. 
+      0.6562
 \end{verbatim}
 \end{frame}
 \begin{frame}[fragile]
@@ -1070,8 +1229,8 @@ mean(df.fake$y)
 \end{lstlisting}
 
 \begin{verbatim}
-         [1] -0.06423976
-     [1] 11.3364
+         [1] -0.3476027
+     [1] 12.54537
 \end{verbatim}
 \end{frame}
 \section{(Some) Advanced functions of the R language}

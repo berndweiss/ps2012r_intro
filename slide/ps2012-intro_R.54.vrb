@@ -1,0 +1,24 @@
+\frametitle{The \texttt{is.*()} functions}
+\label{sec-6-1-1}
+
+\begin{itemize}
+\item Sometimes, we want to check some properties of an R object, e.g. is a
+      certain object of class \enquote{data frame} or does it contain missing values (\texttt{NA=s).     - R provides a number is =is.*()}-functions which perform these tests and
+      return a logical object (with values \texttt{TRUE} or \texttt{FALSE}).
+\item Some common examples:
+\end{itemize}
+
+
+\lstset{language=R}
+\begin{lstlisting}
+x.df <- data.frame(x=1, y=2)
+is.data.frame(x.df)
+is.vector(x.df)
+is.na(c(1, 2, 3, NA, NA))
+\end{lstlisting}
+
+\begin{verbatim}
+ [1] TRUE
+ [1] FALSE
+ [1] FALSE FALSE FALSE  TRUE  TRUE
+\end{verbatim}
