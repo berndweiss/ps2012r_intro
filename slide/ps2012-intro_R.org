@@ -198,13 +198,22 @@ x <- 1 ## assign value 1 to symbol/variable "x"
 x      ## or: print(x)
 #+END_SRC
 
+#+RESULTS:
+: [1] 1
+
 #+BEGIN_SRC R
 x + x
 #+END_SRC
 
+#+RESULTS:
+: [1] 2
+
 #+BEGIN_SRC R
 x * 100
 #+END_SRC
+
+#+RESULTS:
+: [1] 100
 
 
 *** A second example of an R object
@@ -251,13 +260,13 @@ oTtest
 	Welch Two Sample t-test
 
 data:  rnorm(100) by sample(0:1, 100, replace = TRUE) 
-t = 0.4303, df = 91.283, p-value = 0.668
+t = -0.6268, df = 97.999, p-value = 0.5323
 alternative hypothesis: true difference in means is not equal to 0 
 95 percent confidence interval:
- -0.2958202  0.4594118 
+ -0.5071938  0.2637065 
 sample estimates:
 mean in group 0 mean in group 1 
-    0.075802877    -0.005992949
+    -0.08006009      0.04168359
 #+end_example
 
 
@@ -268,8 +277,8 @@ oTtest$statistic
 #+END_SRC
 
 #+results:
-:         t 
-: -1.625824
+:          t 
+: -0.6267902
 
 \ldots or the p-value.
 
@@ -278,7 +287,7 @@ oTtest$p.value
 #+END_SRC
 
 #+results:
-: [1] 0.1072097
+: [1] 0.5322542
 
 
 
@@ -343,6 +352,9 @@ x.scalar <- 1
 x.scalar
 #+END_SRC
 
+#+RESULTS:
+: [1] 1
+
 
     - Vector
 #+BEGIN_SRC R
@@ -350,11 +362,18 @@ x.vector <- c(1,2,3)
 x.vector
 #+END_SRC
 
+#+RESULTS:
+: [1] 1 2 3
+
     - Factor (nominal scale; sth like =mean(x.factor)= does not work!)
 #+BEGIN_SRC R
 x.factor <- factor(c(1,2,3), labels = c("low", "middle", "high"))
 x.factor
 #+END_SRC
+
+#+RESULTS:
+: [1] low    middle high  
+: Levels: low middle high
 
 
     #+begin_LaTeX
@@ -388,6 +407,16 @@ x.list <- list(a = c(1,2,3), b = x.df)
 x.list
 #+END_SRC
 
+#+RESULTS:
+: $a
+: [1] 1 2 3
+: 
+: $b
+:   ID sex age
+: 1  1   f  22
+: 2  2   f  45
+: 3  3   m  12
+
 
 *** Missing data
     - The symbol =NA= (Not Available) represents missing values.
@@ -397,11 +426,17 @@ x.na <- c(1,2,3, NA, 5)
 mean(x.na)
 #+END_SRC
 
+#+RESULTS:
+: [1] NA
+
     However, if you specify =na.rm = TRUE= then =mean()= will calculate the mean:
 
 #+BEGIN_SRC R
 mean(x.na, na.rm = TRUE)
 #+END_SRC
+
+#+RESULTS:
+: [1] 2.75
 
     #+begin_LaTeX
     \infobox{\href{http://www.statmethods.net/input/missingdata.html}{Quick-R on Missing data}
@@ -488,14 +523,16 @@ mean(x.na, na.rm = TRUE)
     - The functions =fix()= and =edit()= open a MS-Excel-like datasheet (under MS-Windows).
 
 
-*** Loading a dataset
+*** Loading a SPSS dataset
    :PROPERTIES:
    :BEAMER_env: frame
    :BEAMER_envargs: [shrink = 15]
    :END:
     - =setwd()=: set working directory 
     - =library(foreign)=: Enables R to load SPSS datasets
-    - =read.spss()=: Read SPSS dataset
+    - =read.spss()=: Read SPSS dataset (sometimes you receive a warning message
+      "Warning message: In read.spss(... Unrecognized record type 7, subtype 18
+      encountered in system file"; this warning can be ignored.)
     - =names()=: show column ("variable") names of data object
     - For a description see next slide
 
@@ -524,13 +561,13 @@ names(dTeachExp)
     #+END_SRC
 
     #+RESULTS:
-    :   ID     T        V weeks weekcat    SE
-    : 1  1  0.03 0.015625     2       2 0.125
-    : 2  2  0.12 0.021609    21       3 0.147
-    : 3  3 -0.14 0.027889    19       3 0.167
-    : 4  4  1.18 0.139129     0       0 0.373
-    : 5  5  0.26 0.136161     0       0 0.369
-    : 6  6 -0.06 0.010609     3       3 0.103
+    :   ID     T        V weeks weekcat
+    : 1  1  0.03 0.015625     2       2
+    : 2  2  0.12 0.021609    21       3
+    : 3  3 -0.14 0.027889    19       3
+    : 4  4  1.18 0.139129     0       0
+    : 5  5  0.26 0.136161     0       0
+    : 6  6 -0.06 0.010609     3       3
 
     Another way to inspect your data is =edit()= or =fix()= (be careful not to
     modify your data unintentionally). 
@@ -567,14 +604,29 @@ names(dTeachExp)
 dTeachExp[,"T"] # access variable T
 #+END_SRC
 
+#+RESULTS:
+:  [1]  0.03  0.12 -0.14  1.18  0.26 -0.06 -0.02 -0.32  0.27  0.80  0.54  0.18
+: [13] -0.02  0.23 -0.18 -0.06  0.30  0.07 -0.07
+
 #+BEGIN_SRC R
 dTeachExp$T # access variable T, shortcut for dTeachExp[,"T"]
 #+END_SRC
+
+#+RESULTS:
+:  [1]  0.03  0.12 -0.14  1.18  0.26 -0.06 -0.02 -0.32  0.27  0.80  0.54  0.18
+: [13] -0.02  0.23 -0.18 -0.06  0.30  0.07 -0.07
 
 #+BEGIN_SRC R
 dTeachExp[1:4, c("T", "weeks")] # access first 4 obs of T and weeks
 dTeachExp2 <- dTeachExp[1:4, c("T", "weeks")] # new data frame-object
 #+END_SRC
+
+#+RESULTS:
+:       T weeks
+: 1  0.03     2
+: 2  0.12    21
+: 3 -0.14    19
+: 4  1.18     0
 
 
 
@@ -691,6 +743,14 @@ keep.ids <- c(1, 4, 6, 8)
 dTeachExp.new <- dTeachExp[dTeachExp$ID %in% keep.ids, ]
 dTeachExp.new
 #+END_SRC
+
+#+RESULTS:
+:   ID     T        V weeks weekcat    SE
+: 1  1  0.03 0.015625     2       2 0.125
+: 4  4  1.18 0.139129     0       0 0.373
+: 6  6 -0.06 0.010609     3       3 0.103
+: 8  8 -0.32 0.048400    24       3 0.220
+
     
     
     
@@ -813,19 +873,11 @@ dTeachExp[1:2,!(dTeachExp.names %in% c("weeks", "weekcat"))]
     #+END_SRC
 
     #+RESULTS:
-    #+begin_example
-		x         y sex
-    1   1.0602120  4.167895   f
-    2  -0.4195017 11.885505   m
-    3   1.3068230  7.731882   f
-    4   1.4028825  1.864348   m
-    5  -0.9328214 10.366510   f
-    6  -0.4926540 15.668302   m
-    7   0.2147807 12.763081   f
-    8   1.8915390 18.739016   m
-    9  -0.2425316  8.952724   f
-    10  1.0446102  6.828468   m
-    #+end_example
+    :            x         y sex
+    : 1  0.5513166  4.849549   f
+    : 2 -0.4193142  6.313374   m
+    : 3 -0.7400746  4.396889   f
+    : 4  0.3408240 14.228624   m
 
 ** Mean, median & Co
 
@@ -839,13 +891,13 @@ dTeachExp[1:2,!(dTeachExp.names %in% c("weeks", "weekcat"))]
     #+END_SRC
 
     #+RESULTS:
-    :        x                 y          sex  
-    :  Min.   :-2.2697   Min.   : 3.407   f:5  
-    :  1st Qu.:-0.9146   1st Qu.: 9.346   m:5  
-    :  Median : 0.6377   Median :12.788        
-    :  Mean   : 0.1850   Mean   :11.687        
-    :  3rd Qu.: 0.8431   3rd Qu.:14.825        
-    :  Max.   : 2.2676   Max.   :16.517
+    :        x                  y          sex  
+    :  Min.   :-0.74007   Min.   :-1.095   f:5  
+    :  1st Qu.:-0.34193   1st Qu.: 5.143   m:5  
+    :  Median : 0.01302   Median : 8.835        
+    :  Mean   : 0.15110   Mean   : 8.996        
+    :  3rd Qu.: 0.49869   3rd Qu.:13.198        
+    :  Max.   : 1.41812   Max.   :18.532
 
     #+BEGIN_SRC R
     summary(df.fake$x)
@@ -853,7 +905,7 @@ dTeachExp[1:2,!(dTeachExp.names %in% c("weeks", "weekcat"))]
 
     #+RESULTS:
     :     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-    : -0.78330 -0.22930  0.08223  0.10570  0.52760  1.06400
+    : -0.74010 -0.34190  0.01302  0.15110  0.49870  1.41800
 
 
 *** The =mean()= and =median()= functions
@@ -861,6 +913,10 @@ dTeachExp[1:2,!(dTeachExp.names %in% c("weeks", "weekcat"))]
     mean(df.fake$x)
     mean(df.fake$y)
     #+END_SRC
+
+    #+RESULTS:
+    : [1] 0.151105
+    : [1] 8.99592
 
 
 * (Some) Advanced functions of the R language
@@ -983,25 +1039,25 @@ is.na(c(1, 2, 3, NA, NA))
     #+BEGIN_LaTeX
     %% Part 1: Preamble
     \documentclass{article} 
-    
+
     \usepackage[utf8]{inputenc}  
     \usepackage[T1]{fontenc}
     \usepackage[english]{babel}
-    
+
     %% Part 2: Body 
     \begin{document}
-    
+
     \section{Heading} 
-    
+
     Hello world!
-    
+
     \begin{equation}
     \overline{T} = \frac{\sum\limits^{k}_{i = 1} %
-    T_{i}\cdot w_{i}}{\sum\limits^{k}_{i = 1}w_{i}}
-\end{equation}
+      T_{i}\cdot w_{i}}{\sum\limits^{k}_{i = 1}w_{i}}
+    \end{equation}
 
-\end{document}
-#+END_LaTeX
+    \end{document}
+    #+END_LaTeX
 
 
 *** The compiled 'Hello world'-example

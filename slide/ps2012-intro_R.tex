@@ -1,4 +1,4 @@
-% Created 2012-04-23 Mo 10:15
+% Created 2012-04-24 Di 10:53
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -306,13 +306,13 @@ oTtest
         Welch Two Sample t-test
 
 data:  rnorm(100) by sample(0:1, 100, replace = TRUE) 
-t = -1.6595, df = 91.831, p-value = 0.1004
+t = 1.4018, df = 92.409, p-value = 0.1643
 alternative hypothesis: true difference in means is not equal to 0 
 95 percent confidence interval:
- -0.70460577  0.06313923 
+ -0.1022537  0.5930060 
 sample estimates:
 mean in group 0 mean in group 1 
-    -0.02551101      0.29522225
+     0.08125403     -0.16412214
 \end{verbatim}
 
 
@@ -325,8 +325,8 @@ oTtest$statistic
 \end{lstlisting}
 
 \begin{verbatim}
-         t 
- -1.659456
+        t 
+ 1.401806
 \end{verbatim}
 
 \ldots or the p-value.
@@ -338,7 +338,7 @@ oTtest$p.value
 \end{lstlisting}
 
 \begin{verbatim}
- [1] 0.1004354
+ [1] 0.1643233
 \end{verbatim}
 \end{frame}
 \begin{frame}
@@ -619,13 +619,15 @@ mean(x.na, na.rm = TRUE)
 \end{itemize}
 \end{frame}
 \begin{frame}[fragile,shrink = 15]
-\frametitle{Loading a dataset}
+\frametitle{Loading a SPSS dataset}
 \label{sec-3-1-2}
 
 \begin{itemize}
 \item \texttt{setwd()}: set working directory
 \item \texttt{library(foreign)}: Enables R to load SPSS datasets
-\item \texttt{read.spss()}: Read SPSS dataset
+\item \texttt{read.spss()}: Read SPSS dataset (sometimes you receive a warning message
+      \enquote{Warning message: In read.spss(\ldots{} Unrecognized record type 7, subtype 18
+      encountered in system file}; this warning can be ignored.)
 \item \texttt{names()}: show column (\enquote{variable}) names of data object
 \item For a description see next slide
 \end{itemize}
@@ -1016,11 +1018,11 @@ df.fake[1:4, ] # show rows 1 to 4
 \end{lstlisting}
 
 \begin{verbatim}
-                   x          y sex
-     1 1.8652696 16.1644829   f
-     2 0.1415444  8.8382284   m
-     3 1.1423205  7.7200622   f
-     4 0.4350909  0.7427628   m
+                    x         y sex
+     1 -0.3409091 19.949138   f
+     2 -0.1316638 11.382895   m
+     3 -0.2772535 16.608719   f
+     4 -1.2859231  7.594134   m
 \end{verbatim}
 \end{frame}
 \subsection{Mean, median \& Co}
@@ -1036,13 +1038,13 @@ summary(df.fake)
 \end{lstlisting}
 
 \begin{verbatim}
-                x                 y           sex  
-      Min.   :-0.7848   Min.   : 0.7428   f:5  
-      1st Qu.:-0.1647   1st Qu.: 3.9262   m:5  
-      Median : 0.1345   Median : 7.6184        
-      Mean   : 0.2630   Mean   : 7.2026        
-      3rd Qu.: 0.4697   3rd Qu.: 9.1269        
-      Max.   : 1.8653   Max.   :16.1645
+                x                  y          sex  
+      Min.   :-1.28592   Min.   : 3.272   f:5  
+      1st Qu.:-0.25101   1st Qu.: 7.925   m:5  
+      Median :-0.08269   Median :11.047        
+      Mean   :-0.06424   Mean   :11.336        
+      3rd Qu.: 0.19868   3rd Qu.:15.108        
+      Max.   : 0.69569   Max.   :19.949
 \end{verbatim}
 
 
@@ -1052,8 +1054,8 @@ summary(df.fake$x)
 \end{lstlisting}
 
 \begin{verbatim}
-            Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-     -0.7848 -0.1647  0.1345  0.2630  0.4697  1.8650
+             Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+     -1.28600 -0.25100 -0.08269 -0.06424  0.19870  0.69570
 \end{verbatim}
 \end{frame}
 \begin{frame}[fragile]
@@ -1068,8 +1070,8 @@ mean(df.fake$y)
 \end{lstlisting}
 
 \begin{verbatim}
-         [1] 0.2630431
-     [1] 7.202629
+         [1] -0.06423976
+     [1] 11.3364
 \end{verbatim}
 \end{frame}
 \section{(Some) Advanced functions of the R language}
