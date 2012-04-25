@@ -1049,6 +1049,8 @@ recode(dTE.miss2$weeks, "0:5 = 'niedrig';
     : [1] 8.99592
 
 
+* The basic graphics system
+
 * (Some) Advanced functions of the R language
 
 ** 
@@ -1058,7 +1060,8 @@ recode(dTE.miss2$weeks, "0:5 = 'niedrig';
     :BEAMER_envargs: [label=slide_is_function]
     :END:
     - Sometimes, we want to check some properties of an R object, e.g. is a
-      certain object of class "data frame" or does it contain missing values (=NA=s).
+      certain object of class "data frame" or does it contain missing values
+      (=NA=).
     - R provides a number is =is.*()=-functions which perform these tests and
       return a logical object (with values =TRUE= or =FALSE=).
     - Some common examples:
@@ -1074,6 +1077,9 @@ is.na(c(1, 2, 3, NA, NA))
 : [1] TRUE
 : [1] FALSE
 : [1] FALSE FALSE FALSE  TRUE  TRUE
+
+
+* Advanced graphics
 
 * Reproducible research (RR) and workflow
 
