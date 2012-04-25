@@ -1,4 +1,4 @@
-% Created 2012-04-25 Mi 06:09
+% Created 2012-04-25 Mi 06:23
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -85,9 +85,9 @@ xleftmargin=.23in
 {
   \begin{frame}%<beamer>
     \frametitle{Section overview}
-    \begin{footnotesize}
+    \begin{tiny}
       \tableofcontents[sectionstyle=show/shaded, subsectionstyle = show/show/shaded]
-    \end{footnotesize}
+    \end{tiny}
   \end{frame}
 }
 
@@ -96,10 +96,10 @@ xleftmargin=.23in
 {
   \begin{frame}%<beamer>
     \frametitle{Subsection overview}
-    \begin{footnotesize}
+    \begin{tiny}
       %%\tableofcontents[sectionstyle=show/hide, subsectionstyle = show/show/hide]
       \tableofcontents[sectionstyle=show/shaded, subsectionstyle = show/shaded/hide]
-       \end{footnotesize}
+       \end{tiny}
   \end{frame}
 }
 
@@ -306,14 +306,14 @@ oTtest
         Welch Two Sample t-test
 
 data:  rnorm(100) by sample(0:1, 100, replace = TRUE) 
-t = -1.3226, df = 96.425, p-value =
-0.1891
+t = 0.1364, df = 96.012, p-value =
+0.8918
 alternative hypothesis: true difference in means is not equal to 0 
 95 percent confidence interval:
- -0.6771838  0.1355875 
+ -0.3579065  0.4107316 
 sample estimates:
 mean in group 0 mean in group 1 
-     -0.1451171       0.1256810
+    -0.04344549     -0.06985806
 \end{verbatim}
 
 
@@ -327,7 +327,7 @@ oTtest$statistic
 
 \begin{verbatim}
          t 
- -1.322635
+ 0.1364191
 \end{verbatim}
 
 \ldots or the p-value.
@@ -339,7 +339,7 @@ oTtest$p.value
 \end{lstlisting}
 
 \begin{verbatim}
- [1] 0.1890852
+ [1] 0.8917756
 \end{verbatim}
 \end{frame}
 \begin{frame}
@@ -1169,11 +1169,11 @@ df.fake[1:4, ] # show rows 1 to 4
 \end{lstlisting}
 
 \begin{verbatim}
-                     x         y sex
-     1 -0.51834374  7.983945   f
-     2 -1.40092183 10.942700   m
-     3  0.03978433  8.984286   f
-     4 -0.81174808 12.341268   m
+                    x         y sex
+     1  1.0157965 19.687152   f
+     2 -0.2449825 10.795886   m
+     3  0.8355973  3.821496   f
+     4  0.5669515 10.624566   m
 \end{verbatim}
 \end{frame}
 \subsection{Mean, median \& Co}
@@ -1190,13 +1190,13 @@ summary(df.fake)
 
     
 \begin{verbatim}
-      x                 y         
-Min.   :-1.4644   Min.   : 5.122  
-1st Qu.:-0.7384   1st Qu.: 8.887  
-Median :-0.1683   Median : 9.938  
-Mean   :-0.2719   Mean   :10.539  
-3rd Qu.: 0.2434   3rd Qu.:11.992  
-Max.   : 0.9522   Max.   :17.173  
+      x                 y          
+Min.   :-1.6229   Min.   : 0.8077  
+1st Qu.:-0.2138   1st Qu.: 7.4557  
+Median : 0.3730   Median :10.7102  
+Mean   : 0.2945   Mean   :10.5994  
+3rd Qu.: 0.7684   3rd Qu.:15.3040  
+Max.   : 2.8649   Max.   :19.6872  
 sex  
 f:5  
 m:5
@@ -1210,9 +1210,9 @@ summary(df.fake$x)
 
 \begin{verbatim}
             Min. 1st Qu.  Median    Mean 3rd Qu. 
-     -1.4640 -0.7384 -0.1683 -0.2719  0.2434 
+     -1.6230 -0.2138  0.3730  0.2945  0.7684 
         Max. 
-      0.9522
+      2.8650
 \end{verbatim}
 \end{frame}
 \begin{frame}[fragile]
@@ -1227,8 +1227,8 @@ mean(df.fake$y)
 \end{lstlisting}
 
 \begin{verbatim}
-         [1] -0.2719119
-     [1] 10.53878
+         [1] 0.2944901
+     [1] 10.59936
 \end{verbatim}
 \end{frame}
 \section{The basic graphics system}
@@ -1244,7 +1244,7 @@ mean(df.fake$y)
 \item Sometimes, we want to check some properties of an R object, e.g. is a
       certain object of class \enquote{data frame} or does it contain missing values
       (\texttt{NA}).
-\item R provides a number is \texttt{is.*()}-functions which perform these tests and
+\item R provides a number of \texttt{is.*()}-functions which perform these tests and
       return a logical object (with values \texttt{TRUE} or \texttt{FALSE}).
 \item Some common examples:
 \end{itemize}

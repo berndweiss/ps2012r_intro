@@ -5,7 +5,7 @@
 \item Sometimes, we want to check some properties of an R object, e.g. is a
       certain object of class \enquote{data frame} or does it contain missing values
       (\texttt{NA}).
-\item R provides a number is \texttt{is.*()}-functions which perform these tests and
+\item R provides a number of \texttt{is.*()}-functions which perform these tests and
       return a logical object (with values \texttt{TRUE} or \texttt{FALSE}).
 \item Some common examples:
 \end{itemize}
