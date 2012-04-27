@@ -556,18 +556,10 @@ names(dTeachExp)
 
 
 *** Inspect your data I
-    #+BEGIN_SRC R
-    head(dTeachExp) # prints first 6 cases
-    #+END_SRC
+#+BEGIN_SRC R
+head(dTeachExp) # prints first 6 cases
+#+END_SRC
 
-    #+RESULTS:
-    :   ID     T        V weeks weekcat
-    : 1  1  0.03 0.015625     2       2
-    : 2  2  0.12 0.021609    21       3
-    : 3  3 -0.14 0.027889    19       3
-    : 4  4  1.18 0.139129     0       0
-    : 5  5  0.26 0.136161     0       0
-    : 6  6 -0.06 0.010609     3       3
 
     Another way to inspect your data is =edit()= or =fix()= (be careful not to
     modify your data unintentionally). 

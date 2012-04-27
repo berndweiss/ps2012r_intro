@@ -1,4 +1,4 @@
-% Created 2012-04-25 Mi 06:23
+% Created 2012-04-26 Do 06:03
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -306,14 +306,13 @@ oTtest
         Welch Two Sample t-test
 
 data:  rnorm(100) by sample(0:1, 100, replace = TRUE) 
-t = 0.1364, df = 96.012, p-value =
-0.8918
+t = 0.9574, df = 97.316, p-value = 0.3407
 alternative hypothesis: true difference in means is not equal to 0 
 95 percent confidence interval:
- -0.3579065  0.4107316 
+ -0.1967009  0.5633785 
 sample estimates:
 mean in group 0 mean in group 1 
-    -0.04344549     -0.06985806
+      0.1392209      -0.0441179
 \end{verbatim}
 
 
@@ -327,7 +326,7 @@ oTtest$statistic
 
 \begin{verbatim}
          t 
- 0.1364191
+ 0.9574311
 \end{verbatim}
 
 \ldots or the p-value.
@@ -339,7 +338,7 @@ oTtest$p.value
 \end{lstlisting}
 
 \begin{verbatim}
- [1] 0.8917756
+ [1] 0.3407222
 \end{verbatim}
 \end{frame}
 \begin{frame}
@@ -645,8 +644,7 @@ names(dTeachExp)
 \end{lstlisting}
 
 \begin{verbatim}
-         [1] "ID"      "T"       "V"      
-     [4] "weeks"   "weekcat"
+         [1] "ID"      "T"       "V"       "weeks"   "weekcat"
 \end{verbatim}
 \end{frame}
 \begin{frame}
@@ -666,14 +664,15 @@ head(dTeachExp) # prints first 6 cases
 \end{lstlisting}
 
 \begin{verbatim}
-           ID     T        V weeks weekcat
-     1  1  0.03 0.015625     2       2
-     2  2  0.12 0.021609    21       3
-     3  3 -0.14 0.027889    19       3
-     4  4  1.18 0.139129     0       0
-     5  5  0.26 0.136161     0       0
-     6  6 -0.06 0.010609     3       3
+   ID     T        V weeks weekcat
+ 1  1  0.03 0.015625     2       2
+ 2  2  0.12 0.021609    21       3
+ 3  3 -0.14 0.027889    19       3
+ 4  4  1.18 0.139129     0       0
+ 5  5  0.26 0.136161     0       0
+ 6  6 -0.06 0.010609     3       3
 \end{verbatim}
+
 
     Another way to inspect your data is \texttt{edit()} or \texttt{fix()} (be careful not to
     modify your data unintentionally). 
@@ -719,10 +718,8 @@ dTeachExp[,"T"] # access variable T
 \end{lstlisting}
 
 \begin{verbatim}
-  [1]  0.03  0.12 -0.14  1.18  0.26 -0.06
-  [7] -0.02 -0.32  0.27  0.80  0.54  0.18
- [13] -0.02  0.23 -0.18 -0.06  0.30  0.07
- [19] -0.07
+  [1]  0.03  0.12 -0.14  1.18  0.26 -0.06 -0.02 -0.32  0.27  0.80  0.54  0.18
+ [13] -0.02  0.23 -0.18 -0.06  0.30  0.07 -0.07
 \end{verbatim}
 
 
@@ -732,10 +729,8 @@ dTeachExp$T # access variable T, shortcut for dTeachExp[,"T"]
 \end{lstlisting}
 
 \begin{verbatim}
-  [1]  0.03  0.12 -0.14  1.18  0.26 -0.06
-  [7] -0.02 -0.32  0.27  0.80  0.54  0.18
- [13] -0.02  0.23 -0.18 -0.06  0.30  0.07
- [19] -0.07
+  [1]  0.03  0.12 -0.14  1.18  0.26 -0.06 -0.02 -0.32  0.27  0.80  0.54  0.18
+ [13] -0.02  0.23 -0.18 -0.06  0.30  0.07 -0.07
 \end{verbatim}
 
 
@@ -943,22 +938,14 @@ dTeachExp.missing[!is.na(dTeachExp.missing$T), ][1:6,]
 na.omit(dTeachExp.missing)[1:6,]
 \end{lstlisting}
 
-
 \begin{verbatim}
-   ID     T        V weeks weekcat
-4   4  1.18 0.139129     0       0
-5   5  0.26 0.136161     0       0
-7   7 -0.02 0.010609    17       3
-8   8 -0.32 0.048400    24       3
-9   9  0.27 0.026896     0       0
-10 10  0.80 0.063001     1       1
-      SE
-4  0.373
-5  0.369
-7  0.103
-8  0.220
-9  0.164
-10 0.251
+    ID     T        V weeks weekcat    SE
+ 4   4  1.18 0.139129     0       0 0.373
+ 5   5  0.26 0.136161     0       0 0.369
+ 7   7 -0.02 0.010609    17       3 0.103
+ 8   8 -0.32 0.048400    24       3 0.220
+ 9   9  0.27 0.026896     0       0 0.164
+ 10 10  0.80 0.063001     1       1 0.251
 \end{verbatim}
 \end{frame}
 \begin{frame}[fragile,shrink = 15]
@@ -972,8 +959,7 @@ na.omit(dTeachExp.missing)[1:6,]
 \end{lstlisting}
 
 \begin{verbatim}
- [1] "ID"      "T"       "V"      
- [4] "weeks"   "weekcat" "SE"
+ [1] "ID"      "T"       "V"       "weeks"   "weekcat" "SE"
 \end{verbatim}
 
     Remove the 1. and 3. variable
@@ -1126,6 +1112,8 @@ dTE.miss2$weeks
 \end{lstlisting}
 
 \begin{verbatim}
+ Loading required package: MASS
+ Loading required package: nnet
   [1]  2 21 19  0  0  3 17 24  0  1  0  0
  [13]  1  2 17  5  1  2  7
 \end{verbatim}
@@ -1170,10 +1158,10 @@ df.fake[1:4, ] # show rows 1 to 4
 
 \begin{verbatim}
                     x         y sex
-     1  1.0157965 19.687152   f
-     2 -0.2449825 10.795886   m
-     3  0.8355973  3.821496   f
-     4  0.5669515 10.624566   m
+     1 -2.1468632  9.803179   f
+     2  0.1033050 14.044361   m
+     3  0.7553358  2.350962   f
+     4  0.3230532 10.995466   m
 \end{verbatim}
 \end{frame}
 \subsection{Mean, median \& Co}
@@ -1190,13 +1178,13 @@ summary(df.fake)
 
     
 \begin{verbatim}
-      x                 y          
-Min.   :-1.6229   Min.   : 0.8077  
-1st Qu.:-0.2138   1st Qu.: 7.4557  
-Median : 0.3730   Median :10.7102  
-Mean   : 0.2945   Mean   :10.5994  
-3rd Qu.: 0.7684   3rd Qu.:15.3040  
-Max.   : 2.8649   Max.   :19.6872  
+      x                  y         
+Min.   :-2.14686   Min.   : 2.351  
+1st Qu.:-0.16147   1st Qu.: 9.811  
+Median : 0.21318   Median :11.221  
+Mean   : 0.01717   Mean   :12.181  
+3rd Qu.: 0.65071   3rd Qu.:15.164  
+Max.   : 1.41358   Max.   :21.374  
 sex  
 f:5  
 m:5
@@ -1209,10 +1197,10 @@ summary(df.fake$x)
 \end{lstlisting}
 
 \begin{verbatim}
-            Min. 1st Qu.  Median    Mean 3rd Qu. 
-     -1.6230 -0.2138  0.3730  0.2945  0.7684 
-        Max. 
-      2.8650
+             Min.  1st Qu.   Median     Mean 
+     -2.14700 -0.16150  0.21320  0.01717 
+      3rd Qu.     Max. 
+      0.65070  1.41400
 \end{verbatim}
 \end{frame}
 \begin{frame}[fragile]
@@ -1227,8 +1215,8 @@ mean(df.fake$y)
 \end{lstlisting}
 
 \begin{verbatim}
-         [1] 0.2944901
-     [1] 10.59936
+         [1] 0.01717264
+     [1] 12.18078
 \end{verbatim}
 \end{frame}
 \section{The basic graphics system}
