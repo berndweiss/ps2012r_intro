@@ -79,9 +79,9 @@ xleftmargin=.23in
 {
   \begin{frame}%<beamer>
     \frametitle{Section overview}
-    \begin{footnotesize}
+    \begin{tiny}
       \tableofcontents[sectionstyle=show/shaded, subsectionstyle = show/show/shaded]
-    \end{footnotesize}
+    \end{tiny}
   \end{frame}
 }
 
@@ -90,10 +90,10 @@ xleftmargin=.23in
 {
   \begin{frame}%<beamer>
     \frametitle{Subsection overview}
-    \begin{footnotesize}
+    \begin{tiny}
       %%\tableofcontents[sectionstyle=show/hide, subsectionstyle = show/show/hide]
       \tableofcontents[sectionstyle=show/shaded, subsectionstyle = show/shaded/hide]
-       \end{footnotesize}
+       \end{tiny}
   \end{frame}
 }
 #+end_latex
@@ -556,18 +556,10 @@ names(dTeachExp)
 
 
 *** Inspect your data I
-    #+BEGIN_SRC R
-    head(dTeachExp) # prints first 6 cases
-    #+END_SRC
+#+BEGIN_SRC R
+head(dTeachExp) # prints first 6 cases
+#+END_SRC
 
-    #+RESULTS:
-    :   ID     T        V weeks weekcat
-    : 1  1  0.03 0.015625     2       2
-    : 2  2  0.12 0.021609    21       3
-    : 3  3 -0.14 0.027889    19       3
-    : 4  4  1.18 0.139129     0       0
-    : 5  5  0.26 0.136161     0       0
-    : 6  6 -0.06 0.010609     3       3
 
     Another way to inspect your data is =edit()= or =fix()= (be careful not to
     modify your data unintentionally). 
@@ -1049,6 +1041,8 @@ recode(dTE.miss2$weeks, "0:5 = 'niedrig';
     : [1] 8.99592
 
 
+* The basic graphics system
+
 * (Some) Advanced functions of the R language
 
 ** 
@@ -1058,8 +1052,9 @@ recode(dTE.miss2$weeks, "0:5 = 'niedrig';
     :BEAMER_envargs: [label=slide_is_function]
     :END:
     - Sometimes, we want to check some properties of an R object, e.g. is a
-      certain object of class "data frame" or does it contain missing values (=NA=s).
-    - R provides a number is =is.*()=-functions which perform these tests and
+      certain object of class "data frame" or does it contain missing values
+      (=NA=).
+    - R provides a number of =is.*()=-functions which perform these tests and
       return a logical object (with values =TRUE= or =FALSE=).
     - Some common examples:
 
@@ -1074,6 +1069,9 @@ is.na(c(1, 2, 3, NA, NA))
 : [1] TRUE
 : [1] FALSE
 : [1] FALSE FALSE FALSE  TRUE  TRUE
+
+
+* Advanced graphics
 
 * Reproducible research (RR) and workflow
 
