@@ -1077,7 +1077,7 @@ is.na(c(1, 2, 3, NA, NA))
 
 * Reproducible research (RR) and workflow
 
-** Some basics
+** Some background
 
 *** What is reproducible research?
 
@@ -1115,6 +1115,13 @@ is.na(c(1, 2, 3, NA, NA))
 *** More on reproducible research
     - Kieran Healy: "Choosing Your Workflow Applications"  http://www.kieranhealy.org/files/misc/workflow-apps.pdf
     - ... to be continued ...
+
+** The data analysis workflow
+
+
+*** More information
+    - "Principles of Workflow in Data Analysis" by S Long 
+
 
 ** \LaTeX in 5 minutes
 

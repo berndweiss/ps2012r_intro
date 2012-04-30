@@ -1,4 +1,4 @@
-% Created 2012-04-24 Di 16:37
+% Created 2012-04-30 Mo 13:28
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -306,14 +306,14 @@ oTtest
         Welch Two Sample t-test
 
 data:  rnorm(100) by sample(0:1, 100, replace = TRUE) 
-t = -0.9478, df = 95.447, p-value =
-0.3456
+t = -1.3245, df = 94.369, p-value =
+0.1885
 alternative hypothesis: true difference in means is not equal to 0 
 95 percent confidence interval:
- -0.6846104  0.2421263 
+ -0.6477503  0.1293326 
 sample estimates:
 mean in group 0 mean in group 1 
-     0.01101695      0.23225900
+     0.07426378      0.33347262
 \end{verbatim}
 
 
@@ -326,8 +326,8 @@ oTtest$statistic
 \end{lstlisting}
 
 \begin{verbatim}
-          t 
- -0.9478301
+         t 
+ -1.324541
 \end{verbatim}
 
 \ldots or the p-value.
@@ -339,7 +339,7 @@ oTtest$p.value
 \end{lstlisting}
 
 \begin{verbatim}
- [1] 0.3456096
+ [1] 0.1885223
 \end{verbatim}
 \end{frame}
 \begin{frame}
@@ -1170,10 +1170,10 @@ df.fake[1:4, ] # show rows 1 to 4
 
 \begin{verbatim}
                     x         y sex
-     1  0.1496682 10.215440   f
-     2 -0.1611632  7.611655   m
-     3  0.3597894 17.000173   f
-     4 -0.5229868 13.750855   m
+     1 -0.7265001  6.408922   f
+     2 -1.1747769  6.576237   m
+     3 -0.3370810  9.261784   f
+     4 -1.7558294 13.411156   m
 \end{verbatim}
 \end{frame}
 \subsection{Mean, median \& Co}
@@ -1190,13 +1190,13 @@ summary(df.fake)
 
     
 \begin{verbatim}
-      x                   y         
-Min.   :-2.255828   Min.   : 5.717  
-1st Qu.:-0.458798   1st Qu.: 6.995  
-Median :-0.005748   Median : 9.949  
-Mean   : 0.014763   Mean   :10.802  
-3rd Qu.: 0.553714   3rd Qu.:14.831  
-Max.   : 2.374489   Max.   :17.000  
+      x                 y         
+Min.   :-1.7558   Min.   : 4.622  
+1st Qu.:-1.0627   1st Qu.: 7.248  
+Median :-0.5760   Median :11.652  
+Mean   :-0.6087   Mean   :10.620  
+3rd Qu.:-0.2459   3rd Qu.:12.614  
+Max.   : 0.5144   Max.   :17.721  
 sex  
 f:5  
 m:5
@@ -1209,10 +1209,10 @@ summary(df.fake$x)
 \end{lstlisting}
 
 \begin{verbatim}
-              Min.   1st Qu.    Median      Mean 
-     -2.256000 -0.458800 -0.005748  0.014760 
-       3rd Qu.      Max. 
-      0.553700  2.374000
+            Min. 1st Qu.  Median    Mean 3rd Qu. 
+     -1.7560 -1.0630 -0.5760 -0.6087 -0.2459 
+        Max. 
+      0.5144
 \end{verbatim}
 \end{frame}
 \begin{frame}[fragile]
@@ -1227,8 +1227,8 @@ mean(df.fake$y)
 \end{lstlisting}
 
 \begin{verbatim}
-         [1] 0.01476327
-     [1] 10.80246
+         [1] -0.6087303
+     [1] 10.61962
 \end{verbatim}
 \end{frame}
 \section{(Some) Advanced functions of the R language}
@@ -1262,7 +1262,7 @@ is.na(c(1, 2, 3, NA, NA))
 \end{frame}
 \section{Reproducible research (RR) and workflow}
 \label{sec-7}
-\subsection{Some basics}
+\subsection{Some background}
 \label{sec-7-1}
 \begin{frame}
 \frametitle{What is reproducible research?}
@@ -1316,21 +1316,31 @@ is.na(c(1, 2, 3, NA, NA))
 \item \ldots{} to be continued \ldots{}
 \end{itemize}
 \end{frame}
-\subsection{\LaTeX in 5 minutes}
+\subsection{The data analysis workflow}
 \label{sec-7-2}
 \begin{frame}
-\frametitle{What is \LaTeX}
+\frametitle{More information}
 \label{sec-7-2-1}
+
+\begin{itemize}
+\item \enquote{Principles of Workflow in Data Analysis} by S Long
+\end{itemize}
+\end{frame}
+\subsection{\LaTeX in 5 minutes}
+\label{sec-7-3}
+\begin{frame}
+\frametitle{What is \LaTeX}
+\label{sec-7-3-1}
 \begin{itemize}
 
 \item \LaTeX{} is a markup language. Another markup language you might know is HTML.
-\label{sec-7-2-1-1}%
+\label{sec-7-3-1-1}%
 
 \item \LaTeX{} provides high-quality typesetting features.
-\label{sec-7-2-1-2}%
+\label{sec-7-3-1-2}%
 
 \item The typical workflow is as follows:
-\label{sec-7-2-1-3}%
+\label{sec-7-3-1-3}%
 \begin{enumerate}
 \item Create \LaTeX{} source code file (\texttt{.tex})
 \item Compile it via \LaTeX{} or pdf\LaTeX
@@ -1338,7 +1348,7 @@ is.na(c(1, 2, 3, NA, NA))
 \end{enumerate}
 
 \item In order to run \LaTeX{} on your computer, you will need to install a\\
-\label{sec-7-2-1-4}%
+\label{sec-7-3-1-4}%
 \LaTeX-distribution (e.g., Mik\TeX{} for MS-Windows).  
 
 
@@ -1352,7 +1362,7 @@ is.na(c(1, 2, 3, NA, NA))
 \end{frame}
 \begin{frame}[fragile,shrink = 5]
 \frametitle{What a \LaTeX{} file looks like}
-\label{sec-7-2-3}
+\label{sec-7-3-3}
 
 
 \lstset{language=TeX}
@@ -1381,7 +1391,7 @@ Hello world!
 \end{frame}
 \begin{frame}
 \frametitle{The compiled `Hello world'-example}
-\label{sec-7-2-4}
+\label{sec-7-3-4}
 
 
     \frame{\includegraphics[clip, scale = 0.25]{../graph/hello_world.pdf}}
