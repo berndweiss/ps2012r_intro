@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-% Created 2012-04-30 Mo 13:28
-=======
-% Created 2012-04-26 Do 06:03
->>>>>>> 90e4b6159e04790db6375e9bc4ba0b0c830c6e13
+% Created 2012-05-01 Di 18:56
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -310,24 +306,14 @@ oTtest
         Welch Two Sample t-test
 
 data:  rnorm(100) by sample(0:1, 100, replace = TRUE) 
-<<<<<<< HEAD
-t = -1.3245, df = 94.369, p-value =
-0.1885
+t = -0.0436, df = 87.666, p-value =
+0.9653
 alternative hypothesis: true difference in means is not equal to 0 
 95 percent confidence interval:
- -0.6477503  0.1293326 
+ -0.4098717  0.3922874 
 sample estimates:
 mean in group 0 mean in group 1 
-     0.07426378      0.33347262
-=======
-t = 0.9574, df = 97.316, p-value = 0.3407
-alternative hypothesis: true difference in means is not equal to 0 
-95 percent confidence interval:
- -0.1967009  0.5633785 
-sample estimates:
-mean in group 0 mean in group 1 
-      0.1392209      -0.0441179
->>>>>>> 90e4b6159e04790db6375e9bc4ba0b0c830c6e13
+      0.1323859       0.1411780
 \end{verbatim}
 
 
@@ -340,12 +326,8 @@ oTtest$statistic
 \end{lstlisting}
 
 \begin{verbatim}
-         t 
-<<<<<<< HEAD
- -1.324541
-=======
- 0.9574311
->>>>>>> 90e4b6159e04790db6375e9bc4ba0b0c830c6e13
+           t 
+ -0.04356607
 \end{verbatim}
 
 \ldots or the p-value.
@@ -357,11 +339,7 @@ oTtest$p.value
 \end{lstlisting}
 
 \begin{verbatim}
-<<<<<<< HEAD
- [1] 0.1885223
-=======
- [1] 0.3407222
->>>>>>> 90e4b6159e04790db6375e9bc4ba0b0c830c6e13
+ [1] 0.9653494
 \end{verbatim}
 \end{frame}
 \begin{frame}
@@ -667,7 +645,8 @@ names(dTeachExp)
 \end{lstlisting}
 
 \begin{verbatim}
-         [1] "ID"      "T"       "V"       "weeks"   "weekcat"
+         [1] "ID"      "T"       "V"      
+     [4] "weeks"   "weekcat"
 \end{verbatim}
 \end{frame}
 \begin{frame}
@@ -741,8 +720,10 @@ dTeachExp[,"T"] # access variable T
 \end{lstlisting}
 
 \begin{verbatim}
-  [1]  0.03  0.12 -0.14  1.18  0.26 -0.06 -0.02 -0.32  0.27  0.80  0.54  0.18
- [13] -0.02  0.23 -0.18 -0.06  0.30  0.07 -0.07
+  [1]  0.03  0.12 -0.14  1.18  0.26 -0.06
+  [7] -0.02 -0.32  0.27  0.80  0.54  0.18
+ [13] -0.02  0.23 -0.18 -0.06  0.30  0.07
+ [19] -0.07
 \end{verbatim}
 
 
@@ -752,8 +733,10 @@ dTeachExp$T # access variable T, shortcut for dTeachExp[,"T"]
 \end{lstlisting}
 
 \begin{verbatim}
-  [1]  0.03  0.12 -0.14  1.18  0.26 -0.06 -0.02 -0.32  0.27  0.80  0.54  0.18
- [13] -0.02  0.23 -0.18 -0.06  0.30  0.07 -0.07
+  [1]  0.03  0.12 -0.14  1.18  0.26 -0.06
+  [7] -0.02 -0.32  0.27  0.80  0.54  0.18
+ [13] -0.02  0.23 -0.18 -0.06  0.30  0.07
+ [19] -0.07
 \end{verbatim}
 
 
@@ -796,6 +779,7 @@ dTeachExp2 <- dTeachExp[1:4, c("T", "weeks")] # new data frame-object
 \item Select cases (subsetting/indexing) and variables
 \item Missing values
 \item Recoding
+\item Sorting
 \end{itemize}
 \end{frame}
 \begin{frame}[fragile,shrink=10]
@@ -961,14 +945,22 @@ dTeachExp.missing[!is.na(dTeachExp.missing$T), ][1:6,]
 na.omit(dTeachExp.missing)[1:6,]
 \end{lstlisting}
 
+
 \begin{verbatim}
-    ID     T        V weeks weekcat    SE
- 4   4  1.18 0.139129     0       0 0.373
- 5   5  0.26 0.136161     0       0 0.369
- 7   7 -0.02 0.010609    17       3 0.103
- 8   8 -0.32 0.048400    24       3 0.220
- 9   9  0.27 0.026896     0       0 0.164
- 10 10  0.80 0.063001     1       1 0.251
+   ID     T        V weeks weekcat
+4   4  1.18 0.139129     0       0
+5   5  0.26 0.136161     0       0
+7   7 -0.02 0.010609    17       3
+8   8 -0.32 0.048400    24       3
+9   9  0.27 0.026896     0       0
+10 10  0.80 0.063001     1       1
+      SE
+4  0.373
+5  0.369
+7  0.103
+8  0.220
+9  0.164
+10 0.251
 \end{verbatim}
 \end{frame}
 \begin{frame}[fragile,shrink = 15]
@@ -982,7 +974,8 @@ na.omit(dTeachExp.missing)[1:6,]
 \end{lstlisting}
 
 \begin{verbatim}
- [1] "ID"      "T"       "V"       "weeks"   "weekcat" "SE"
+ [1] "ID"      "T"       "V"      
+ [4] "weeks"   "weekcat" "SE"
 \end{verbatim}
 
     Remove the 1. and 3. variable
@@ -1135,8 +1128,6 @@ dTE.miss2$weeks
 \end{lstlisting}
 
 \begin{verbatim}
- Loading required package: MASS
- Loading required package: nnet
   [1]  2 21 19  0  0  3 17 24  0  1  0  0
  [13]  1  2 17  5  1  2  7
 \end{verbatim}
@@ -1160,6 +1151,78 @@ recode(dTE.miss2$weeks, "0:5 = 'niedrig';
  [19] "bloed"
 \end{verbatim}
 \end{frame}
+\begin{frame}[fragile,shrink = 10]
+\frametitle{Sorting data}
+\label{sec-4-1-13}
+
+
+\begin{itemize}
+\item To sort a vector, use the function \texttt{sort()}, e.g.
+\end{itemize}
+
+
+\lstset{language=R}
+\begin{lstlisting}
+x <- c(4,23,7,3,1)
+sort(x)
+\end{lstlisting}
+
+\begin{verbatim}
+ [1]  1  3  4  7 23
+\end{verbatim}
+
+\begin{itemize}
+\item However, when it comes to sorting a data frame, \texttt{sort()} does not
+      work. Instead, use the function \texttt{order()}, which returns an index, which
+      rearranges the rows according to this new index.
+\end{itemize}
+      
+
+\lstset{language=R}
+\begin{lstlisting}
+mydf <- data.frame(x, a = 1:5)
+mydf
+\end{lstlisting}
+
+\begin{verbatim}
+    x a
+ 1  4 1
+ 2 23 2
+ 3  7 3
+ 4  3 4
+ 5  1 5
+\end{verbatim}
+
+
+\lstset{language=R}
+\begin{lstlisting}
+order(mydf$x)
+\end{lstlisting}
+
+\begin{verbatim}
+ [1] 5 4 1 3 2
+\end{verbatim}
+
+
+\lstset{language=R}
+\begin{lstlisting}
+## row 5 becomes the new row 1, row 4 the new row 2 etc.
+mydf[order(mydf$x), ]
+\end{lstlisting}
+
+
+\begin{verbatim}
+    x a
+ 5  1 5
+ 4  3 4
+ 1  4 1
+ 3  7 3
+ 2 23 2
+\end{verbatim}
+
+
+\infobox{\href{http://www.statmethods.net/management/sorting.html}{Quick-R on Sorting Data}}
+\end{frame}
 \section{Descriptive statistics}
 \label{sec-5}
 \subsection{}
@@ -1181,17 +1244,10 @@ df.fake[1:4, ] # show rows 1 to 4
 
 \begin{verbatim}
                     x         y sex
-<<<<<<< HEAD
-     1 -0.7265001  6.408922   f
-     2 -1.1747769  6.576237   m
-     3 -0.3370810  9.261784   f
-     4 -1.7558294 13.411156   m
-=======
-     1 -2.1468632  9.803179   f
-     2  0.1033050 14.044361   m
-     3  0.7553358  2.350962   f
-     4  0.3230532 10.995466   m
->>>>>>> 90e4b6159e04790db6375e9bc4ba0b0c830c6e13
+     1  0.4917055  9.333354   f
+     2  1.0703966  6.761825   m
+     3  0.1769224  9.630359   f
+     4 -0.8990933 16.440533   m
 \end{verbatim}
 \end{frame}
 \subsection{Mean, median \& Co}
@@ -1208,23 +1264,13 @@ summary(df.fake)
 
     
 \begin{verbatim}
-<<<<<<< HEAD
-      x                 y         
-Min.   :-1.7558   Min.   : 4.622  
-1st Qu.:-1.0627   1st Qu.: 7.248  
-Median :-0.5760   Median :11.652  
-Mean   :-0.6087   Mean   :10.620  
-3rd Qu.:-0.2459   3rd Qu.:12.614  
-Max.   : 0.5144   Max.   :17.721  
-=======
       x                  y         
-Min.   :-2.14686   Min.   : 2.351  
-1st Qu.:-0.16147   1st Qu.: 9.811  
-Median : 0.21318   Median :11.221  
-Mean   : 0.01717   Mean   :12.181  
-3rd Qu.: 0.65071   3rd Qu.:15.164  
-Max.   : 1.41358   Max.   :21.374  
->>>>>>> 90e4b6159e04790db6375e9bc4ba0b0c830c6e13
+Min.   :-2.63846   Min.   : 5.418  
+1st Qu.:-1.09749   1st Qu.: 8.702  
+Median :-0.09656   Median : 9.545  
+Mean   :-0.37925   Mean   :10.909  
+3rd Qu.: 0.46036   3rd Qu.:13.993  
+Max.   : 1.07040   Max.   :16.441  
 sex  
 f:5  
 m:5
@@ -1237,17 +1283,10 @@ summary(df.fake$x)
 \end{lstlisting}
 
 \begin{verbatim}
-<<<<<<< HEAD
-            Min. 1st Qu.  Median    Mean 3rd Qu. 
-     -1.7560 -1.0630 -0.5760 -0.6087 -0.2459 
-        Max. 
-      0.5144
-=======
              Min.  1st Qu.   Median     Mean 
-     -2.14700 -0.16150  0.21320  0.01717 
+     -2.63800 -1.09700 -0.09656 -0.37920 
       3rd Qu.     Max. 
-      0.65070  1.41400
->>>>>>> 90e4b6159e04790db6375e9bc4ba0b0c830c6e13
+      0.46040  1.07000
 \end{verbatim}
 \end{frame}
 \begin{frame}[fragile]
@@ -1262,13 +1301,8 @@ mean(df.fake$y)
 \end{lstlisting}
 
 \begin{verbatim}
-<<<<<<< HEAD
-         [1] -0.6087303
-     [1] 10.61962
-=======
-         [1] 0.01717264
-     [1] 12.18078
->>>>>>> 90e4b6159e04790db6375e9bc4ba0b0c830c6e13
+         [1] -0.3792461
+     [1] 10.90947
 \end{verbatim}
 \end{frame}
 \section{The basic graphics system}
@@ -1304,18 +1338,82 @@ is.na(c(1, 2, 3, NA, NA))
  [1] FALSE FALSE FALSE  TRUE  TRUE
 \end{verbatim}
 \end{frame}
+\begin{frame}[fragile,shrink = 5]
+\frametitle{Identifying duplicates I}
+\label{sec-7-1-2}
+
+
+    The function \texttt{duplicated()} is handy to identify duplicate elements of a
+    vector or a data frame. 
+
+
+\lstset{language=R}
+\begin{lstlisting}
+x <- c(1,2,1,43,5,2)
+duplicated(x)
+\end{lstlisting}
+
+\begin{verbatim}
+ [1] FALSE FALSE  TRUE FALSE FALSE  TRUE
+\end{verbatim}
+
+
+\lstset{language=R}
+\begin{lstlisting}
+mydf <- data.frame(x, y = c(1,2,1,43,5,22))
+mydf
+duplicated(mydf)
+\end{lstlisting}
+
+\begin{verbatim}
+    x  y
+ 1  1  1
+ 2  2  2
+ 3  1  1
+ 4 43 43
+ 5  5  5
+ 6  2 22
+ [1] FALSE FALSE  TRUE FALSE FALSE FALSE
+\end{verbatim}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{Identifying duplicates II and \texttt{unique()}}
+\label{sec-7-1-3}
+
+
+\begin{itemize}
+\item The result of a \texttt{duplicated()} can be used to exclude double entries.
+\end{itemize}
+
+
+\lstset{language=R}
+\begin{lstlisting}
+x[!duplicated(x)]
+\end{lstlisting}
+
+\begin{verbatim}
+ [1]  1  2 43  5
+\end{verbatim}
+
+\begin{itemize}
+\item However, to get a list of unique entries just use \texttt{unique()}.
+\end{itemize}
+
+\lstset{language=R}
+\begin{lstlisting}
+unique(x)
+\end{lstlisting}
+
+\begin{verbatim}
+ [1]  1  2 43  5
+\end{verbatim}
+\end{frame}
 \section{Advanced graphics}
 \label{sec-8}
 \section{Reproducible research (RR) and workflow}
-<<<<<<< HEAD
-\label{sec-7}
-\subsection{Some background}
-\label{sec-7-1}
-=======
 \label{sec-9}
-\subsection{Some basics}
+\subsection{Some background}
 \label{sec-9-1}
->>>>>>> 90e4b6159e04790db6375e9bc4ba0b0c830c6e13
 \begin{frame}
 \frametitle{What is reproducible research?}
 \label{sec-9-1-1}
@@ -1368,49 +1466,31 @@ is.na(c(1, 2, 3, NA, NA))
 \item \ldots{} to be continued \ldots{}
 \end{itemize}
 \end{frame}
-<<<<<<< HEAD
 \subsection{The data analysis workflow}
-\label{sec-7-2}
+\label{sec-9-2}
 \begin{frame}
-\frametitle{More information}
-\label{sec-7-2-1}
+\frametitle{\ldots{} to be continued \ldots{}}
+\label{sec-9-2-1}
 
 \begin{itemize}
 \item \enquote{Principles of Workflow in Data Analysis} by S Long
 \end{itemize}
 \end{frame}
 \subsection{\LaTeX in 5 minutes}
-\label{sec-7-3}
+\label{sec-9-3}
 \begin{frame}
 \frametitle{What is \LaTeX}
-\label{sec-7-3-1}
+\label{sec-9-3-1}
 \begin{itemize}
 
 \item \LaTeX{} is a markup language. Another markup language you might know is HTML.
-\label{sec-7-3-1-1}%
+\label{sec-9-3-1-1}%
 
 \item \LaTeX{} provides high-quality typesetting features.
-\label{sec-7-3-1-2}%
+\label{sec-9-3-1-2}%
 
 \item The typical workflow is as follows:
-\label{sec-7-3-1-3}%
-=======
-\subsection{\LaTeX in 5 minutes}
-\label{sec-9-2}
-\begin{frame}
-\frametitle{What is \LaTeX}
-\label{sec-9-2-1}
-\begin{itemize}
-
-\item \LaTeX{} is a markup language. Another markup language you might know is HTML.
-\label{sec-9-2-1-1}%
-
-\item \LaTeX{} provides high-quality typesetting features.
-\label{sec-9-2-1-2}%
-
-\item The typical workflow is as follows:
-\label{sec-9-2-1-3}%
->>>>>>> 90e4b6159e04790db6375e9bc4ba0b0c830c6e13
+\label{sec-9-3-1-3}%
 \begin{enumerate}
 \item Create \LaTeX{} source code file (\texttt{.tex})
 \item Compile it via \LaTeX{} or pdf\LaTeX
@@ -1418,11 +1498,7 @@ is.na(c(1, 2, 3, NA, NA))
 \end{enumerate}
 
 \item In order to run \LaTeX{} on your computer, you will need to install a\\
-<<<<<<< HEAD
-\label{sec-7-3-1-4}%
-=======
-\label{sec-9-2-1-4}%
->>>>>>> 90e4b6159e04790db6375e9bc4ba0b0c830c6e13
+\label{sec-9-3-1-4}%
 \LaTeX-distribution (e.g., Mik\TeX{} for MS-Windows).  
 
 
@@ -1436,11 +1512,7 @@ is.na(c(1, 2, 3, NA, NA))
 \end{frame}
 \begin{frame}[fragile,shrink = 5]
 \frametitle{What a \LaTeX{} file looks like}
-<<<<<<< HEAD
-\label{sec-7-3-3}
-=======
-\label{sec-9-2-3}
->>>>>>> 90e4b6159e04790db6375e9bc4ba0b0c830c6e13
+\label{sec-9-3-3}
 
 
 \lstset{language=TeX}
@@ -1469,11 +1541,7 @@ Hello world!
 \end{frame}
 \begin{frame}
 \frametitle{The compiled `Hello world'-example}
-<<<<<<< HEAD
-\label{sec-7-3-4}
-=======
-\label{sec-9-2-4}
->>>>>>> 90e4b6159e04790db6375e9bc4ba0b0c830c6e13
+\label{sec-9-3-4}
 
 
     \frame{\includegraphics[clip, scale = 0.25]{../graph/hello_world.pdf}}
